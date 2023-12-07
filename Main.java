@@ -1,3 +1,4 @@
+//Imports
 import java.awt.*; 
 import javax.swing.*;
 class MyFrame extends JFrame{
@@ -23,6 +24,7 @@ class MyFrame extends JFrame{
 		System.out.println("paint:  " + paintCnt++);
 	}
 }
+//Wow
 public class Main {
 	public static void main ( String[] args )  {
 		MyFrame frame = new MyFrame();
