@@ -25,16 +25,11 @@ public class Smash extends JFrame {
     Character p1 = new Character(50, 0);
 	Character p2 = new Character(250, 0);
 
-<<<<<<< HEAD
     Platform [] platforms = {
         new Platform(0, 320, 400, 5, 1, true),
-        new Platform(100, 200, 200, 5, 1, true)
-=======
-    Platform[] platforms = {
-        new Platform(0, 320, 400, 5, 1, true)
->>>>>>> 9250c32e5d47c3c194ca57bdc405c34172e5cd09
-    };
-
+        new Platform(100, 250, 200, 5, 1, true)
+	};
+	
     //Base Constructor
     public Smash() {
         setTitle("Smash Game");
@@ -83,30 +78,20 @@ public class Smash extends JFrame {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_A) {
             p1KeysPressed[1] = true;
-<<<<<<< HEAD
-        } else if (key == KeyEvent.VK_W && isOnPlatform(p1, platforms)) {
-            p1.jump();
-=======
         } else if (key == KeyEvent.VK_D) {
             p1KeysPressed[3] = true;
         } else if (key == KeyEvent.VK_W) {
             p1KeysPressed[0] = true;
-			if (platforms[0].isOnPlatform(p1))
+			if (isOnPlatform(p1, platforms))
 				p1.jump();
->>>>>>> 9250c32e5d47c3c194ca57bdc405c34172e5cd09
         } else if (key == KeyEvent.VK_J) {
             p2KeysPressed[1] = true;
-<<<<<<< HEAD
-        } else if (key == KeyEvent.VK_I && isOnPlatform(p2, platforms)) {
-            p2.jump();
-=======
         } else if (key == KeyEvent.VK_L) {
             p2KeysPressed[3] = true;
         } else if (key == KeyEvent.VK_I) {
 			p2KeysPressed[0] = true;
-			if (platforms[0].isOnPlatform(p2))
+			if (isOnPlatform(p2, platforms))
 				p2.jump();
->>>>>>> 9250c32e5d47c3c194ca57bdc405c34172e5cd09
         } 
     }
 
@@ -126,26 +111,9 @@ public class Smash extends JFrame {
     
 
     public void update() {
-<<<<<<< HEAD
-		// move to character class once platform class is made
-        if (!isOnPlatform(p1, platforms) && !p1.isJumping) {
-             // Adjust the speed of falling
-            p1.y += 5;
-        }
-		if (!isOnPlatform(p2, platforms) && !p2.isJumping) {
-             // Adjust the speed of falling
-            p2.y += 5;
-        }
-		//
-
-        // Horizontal movement control
-        p1.move(p1KeysPressed);
-		p2.move(p2KeysPressed);
-=======
 		// Movement control
-        p1.move(p1KeysPressed, platforms[0].isOnPlatform(p1));
-		p2.move(p2KeysPressed, platforms[0].isOnPlatform(p2));
->>>>>>> 9250c32e5d47c3c194ca57bdc405c34172e5cd09
+        p1.move(p1KeysPressed, isOnPlatform(p1, platforms));
+		p2.move(p2KeysPressed, isOnPlatform(p2, platforms));
     }
 
 
@@ -161,11 +129,9 @@ public class Smash extends JFrame {
             // Draw platform
             g.setColor(Color.GREEN);
             g.fillRect(platforms[0].x, platforms[0].y, platforms[0].width, platforms[0].height);
-<<<<<<< HEAD
+
             g.setColor(Color.RED);
             g.fillRect(platforms[1].x, platforms[1].y, platforms[1].width, platforms[1].height);
-=======
->>>>>>> 9250c32e5d47c3c194ca57bdc405c34172e5cd09
 
             // Draw character
             g.setColor(Color.RED);
