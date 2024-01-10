@@ -15,15 +15,14 @@ import java.awt.event.KeyListener;
 
 public class Smash extends JFrame {
 
-    public boolean[] p1KeysPressed = new boolean[2]; // [A, D]
-	public boolean[] p2KeysPressed = new boolean[2]; // [J, L]
+    public boolean[] p1KeysPressed = new boolean[4]; // [W, A, S, D, E]
+	public boolean[] p2KeysPressed = new boolean[4]; // [I, J, K, L, O]
 
     //Character
     Character p1 = new Character(50, 0);
 	Character p2 = new Character(250, 0);
-    Platform plat1 = new Platform(0, 320, 400, 5, 1, true);
 
-    Platform [] platforms = {
+    Platform[] platforms = {
         new Platform(0, 320, 400, 5, 1, true)
     };
 
@@ -64,50 +63,43 @@ public class Smash extends JFrame {
     public void handleKeyPress(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_A) {
-            p1KeysPressed[0] = true;
-        } else if (key == KeyEvent.VK_D) {
             p1KeysPressed[1] = true;
-        } else if (key == KeyEvent.VK_W && plat1.isOnPlatform(p1)) {
-            p1.jump();
+        } else if (key == KeyEvent.VK_D) {
+            p1KeysPressed[3] = true;
+        } else if (key == KeyEvent.VK_W) {
+            p1KeysPressed[0] = true;
+			if (platforms[0].isOnPlatform(p1))
+				p1.jump();
         } else if (key == KeyEvent.VK_J) {
-            p2KeysPressed[0] = true;
-        } else if (key == KeyEvent.VK_L) {
             p2KeysPressed[1] = true;
-        } else if (key == KeyEvent.VK_I && plat1.isOnPlatform(p2)) {
-            p2.jump();
+        } else if (key == KeyEvent.VK_L) {
+            p2KeysPressed[3] = true;
+        } else if (key == KeyEvent.VK_I) {
+			p2KeysPressed[0] = true;
+			if (platforms[0].isOnPlatform(p2))
+				p2.jump();
         } 
     }
 
     public void handleKeyRelease(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_A) {
-            p1KeysPressed[0] = false;
-        } else if (key == KeyEvent.VK_D) {
             p1KeysPressed[1] = false;
+        } else if (key == KeyEvent.VK_D) {
+            p1KeysPressed[3] = false;
         } else if (key == KeyEvent.VK_J) {
-            p2KeysPressed[0] = false;
-        } else if (key == KeyEvent.VK_L) {
             p2KeysPressed[1] = false;
+        } else if (key == KeyEvent.VK_L) {
+            p2KeysPressed[3] = false;
         }
     }
 
     
 
     public void update() {
-		// move to character class once platform class is made
-        if (!plat1.isOnPlatform(p1) && !p1.isJumping) {
-             // Adjust the speed of falling
-            p1.y += 5;
-        }
-		if (!plat1.isOnPlatform(p2) && !p2.isJumping) {
-             // Adjust the speed of falling
-            p2.y += 5;
-        }
-		//
-
-        // Horizontal movement control
-        p1.move(p1KeysPressed);
-		p2.move(p2KeysPressed);
+		// Movement control
+        p1.move(p1KeysPressed, platforms[0].isOnPlatform(p1));
+		p2.move(p2KeysPressed, platforms[0].isOnPlatform(p2));
     }
 
 
@@ -119,7 +111,7 @@ public class Smash extends JFrame {
 
             // Draw platform
             g.setColor(Color.GREEN);
-            g.fillRect(plat1.x, plat1.y, plat1.width, plat1.height);
+            g.fillRect(platforms[0].x, platforms[0].y, platforms[0].width, platforms[0].height);
 
             // Draw character
             g.setColor(Color.RED);
