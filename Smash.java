@@ -17,20 +17,20 @@ public class Smash extends JFrame {
 
     public boolean[] p1KeysPressed = new boolean[2]; // [A, D]
 	public boolean[] p2KeysPressed = new boolean[2]; // [J, L]
-    
-	// change when playtform class is created
-	private int platformY = 320;
-    private int platformWidth = 400;
-	//
 
     //Character
     Character p1 = new Character(50, 0);
 	Character p2 = new Character(250, 0);
+    Platform plat1 = new Platform(0, 320, 400, 5, 1, true);
+
+    Platform [] platforms = {
+        new Platform(0, 320, 400, 5, 1, true)
+    };
 
     //Base Constructor
     public Smash() {
         setTitle("Smash Game");
-        setSize(400, 400);
+        setSize(960, 520);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -67,13 +67,13 @@ public class Smash extends JFrame {
             p1KeysPressed[0] = true;
         } else if (key == KeyEvent.VK_D) {
             p1KeysPressed[1] = true;
-        } else if (key == KeyEvent.VK_W && isOnPlatform(p1)) {
+        } else if (key == KeyEvent.VK_W && plat1.isOnPlatform(p1)) {
             p1.jump();
         } else if (key == KeyEvent.VK_J) {
             p2KeysPressed[0] = true;
         } else if (key == KeyEvent.VK_L) {
             p2KeysPressed[1] = true;
-        } else if (key == KeyEvent.VK_I && isOnPlatform(p2)) {
+        } else if (key == KeyEvent.VK_I && plat1.isOnPlatform(p2)) {
             p2.jump();
         } 
     }
@@ -95,11 +95,11 @@ public class Smash extends JFrame {
 
     public void update() {
 		// move to character class once platform class is made
-        if (!isOnPlatform(p1) && !p1.isJumping) {
+        if (!plat1.isOnPlatform(p1) && !p1.isJumping) {
              // Adjust the speed of falling
             p1.y += 5;
         }
-		if (!isOnPlatform(p2) && !p2.isJumping) {
+		if (!plat1.isOnPlatform(p2) && !p2.isJumping) {
              // Adjust the speed of falling
             p2.y += 5;
         }
@@ -110,14 +110,6 @@ public class Smash extends JFrame {
 		p2.move(p2KeysPressed);
     }
 
-	// move to character class once platform class is made
-    public boolean isOnPlatform(Character Player) {
-        return Player.y + Player.height >= platformY &&
-               Player.y + Player.height <= platformY + 5 &&
-               Player.x + Player.width >= 0 &&
-               Player.x <= platformWidth - Player.width;
-    }
-	//
 
     // Gameplay Panel
     public class SmashPanel extends JPanel {
@@ -125,13 +117,9 @@ public class Smash extends JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
 
-            // Draw ground
-            g.setColor(Color.BLUE);
-            g.fillRect(0, getHeight() - 20, getWidth(), 20);
-
             // Draw platform
             g.setColor(Color.GREEN);
-            g.fillRect(0, platformY, platformWidth, 5);
+            g.fillRect(plat1.x, plat1.y, plat1.width, plat1.height);
 
             // Draw character
             g.setColor(Color.RED);
