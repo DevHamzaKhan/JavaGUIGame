@@ -6,12 +6,15 @@ Program Description: Platformer game where character can move around and jump
 */
 
 //Imports
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
 
 public class Smash extends JFrame {
 
@@ -21,10 +24,10 @@ public class Smash extends JFrame {
     //Character
     Character p1 = new Character(50, 0);
 	Character p2 = new Character(250, 0);
-    Platform plat1 = new Platform(0, 320, 400, 5, 1, true);
 
     Platform [] platforms = {
-        new Platform(0, 320, 400, 5, 1, true)
+        new Platform(0, 320, 400, 5, 1, true),
+        new Platform(100, 200, 200, 5, 1, true)
     };
 
     //Base Constructor
@@ -60,20 +63,30 @@ public class Smash extends JFrame {
 
         setFocusable(true);
     }
-
+    public boolean isOnPlatform(Character character, Platform [] platforms){
+        for (Platform p : platforms) {
+            if (character.y + Character.height >= p.y &&
+                character.y + Character.height <= p.y + 5 &&
+                character.x + Character.width >= 0 &&
+                character.x <= p.width - Character.width == true) {
+                    return true;
+            }
+        }
+        return false;
+    }
     public void handleKeyPress(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_A) {
             p1KeysPressed[0] = true;
         } else if (key == KeyEvent.VK_D) {
             p1KeysPressed[1] = true;
-        } else if (key == KeyEvent.VK_W && plat1.isOnPlatform(p1)) {
+        } else if (key == KeyEvent.VK_W && isOnPlatform(p1, platforms)) {
             p1.jump();
         } else if (key == KeyEvent.VK_J) {
             p2KeysPressed[0] = true;
         } else if (key == KeyEvent.VK_L) {
             p2KeysPressed[1] = true;
-        } else if (key == KeyEvent.VK_I && plat1.isOnPlatform(p2)) {
+        } else if (key == KeyEvent.VK_I && isOnPlatform(p2, platforms)) {
             p2.jump();
         } 
     }
@@ -95,11 +108,11 @@ public class Smash extends JFrame {
 
     public void update() {
 		// move to character class once platform class is made
-        if (!plat1.isOnPlatform(p1) && !p1.isJumping) {
+        if (!isOnPlatform(p1, platforms) && !p1.isJumping) {
              // Adjust the speed of falling
             p1.y += 5;
         }
-		if (!plat1.isOnPlatform(p2) && !p2.isJumping) {
+		if (!isOnPlatform(p2, platforms) && !p2.isJumping) {
              // Adjust the speed of falling
             p2.y += 5;
         }
@@ -113,13 +126,18 @@ public class Smash extends JFrame {
 
     // Gameplay Panel
     public class SmashPanel extends JPanel {
-        @Override
+
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
 
+            //Background Image
+            //g.drawImage(backgroundImage, 0, 0, this);
+
             // Draw platform
             g.setColor(Color.GREEN);
-            g.fillRect(plat1.x, plat1.y, plat1.width, plat1.height);
+            g.fillRect(platforms[0].x, platforms[0].y, platforms[0].width, platforms[0].height);
+            g.setColor(Color.RED);
+            g.fillRect(platforms[1].x, platforms[1].y, platforms[1].width, platforms[1].height);
 
             // Draw character
             g.setColor(Color.RED);
