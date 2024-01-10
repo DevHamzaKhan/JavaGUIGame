@@ -19,7 +19,7 @@ public class Character {
 		this.health = 100;
     }
 	
-	public void move(boolean[] keysPressed, boolean isOnPlatform) {
+	public void move(boolean[] keysPressed, Platform[] platforms) {
 		if (keysPressed[1] && x > 0) {
              // Adjust the speed of left movement
             x -= 5;
@@ -28,7 +28,7 @@ public class Character {
             // Adjust the speed of right movement
             x += 5;
         }
-		if (!isOnPlatform && !isJumping) {
+		if (!isOnPlatform(platforms) && !isJumping) {
 			y += 5;
 		}
 	}
@@ -52,5 +52,17 @@ public class Character {
                 isJumping = false;
             }
         }).start();
+    }
+	
+	public boolean isOnPlatform(Platform[] platforms){
+        for (Platform p : platforms) {
+            if (y + Character.height >= p.y &&
+                y + Character.height <= p.y + 5 &&
+                x + Character.width >= p.x &&
+                x + Character.width <= p.x + p.width) {
+                    return true;
+            }
+        }
+        return false;
     }
 }

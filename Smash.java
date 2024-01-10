@@ -63,17 +63,7 @@ public class Smash extends JFrame {
 
         setFocusable(true);
     }
-    public boolean isOnPlatform(Character character, Platform [] platforms){
-        for (Platform p : platforms) {
-            if (character.y + Character.height >= p.y &&
-                character.y + Character.height <= p.y + 5 &&
-                character.x + Character.width >= 0 &&
-                character.x <= p.width - Character.width == true) {
-                    return true;
-            }
-        }
-        return false;
-    }
+    
     public void handleKeyPress(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_A) {
@@ -82,7 +72,7 @@ public class Smash extends JFrame {
             p1KeysPressed[3] = true;
         } else if (key == KeyEvent.VK_W) {
             p1KeysPressed[0] = true;
-			if (isOnPlatform(p1, platforms))
+			if (p1.isOnPlatform(platforms))
 				p1.jump();
         } else if (key == KeyEvent.VK_J) {
             p2KeysPressed[1] = true;
@@ -90,7 +80,7 @@ public class Smash extends JFrame {
             p2KeysPressed[3] = true;
         } else if (key == KeyEvent.VK_I) {
 			p2KeysPressed[0] = true;
-			if (isOnPlatform(p2, platforms))
+			if (p2.isOnPlatform(platforms))
 				p2.jump();
         } 
     }
@@ -112,8 +102,8 @@ public class Smash extends JFrame {
 
     public void update() {
 		// Movement control
-        p1.move(p1KeysPressed, isOnPlatform(p1, platforms));
-		p2.move(p2KeysPressed, isOnPlatform(p2, platforms));
+        p1.move(p1KeysPressed, platforms);
+		p2.move(p2KeysPressed, platforms);
     }
 
 
