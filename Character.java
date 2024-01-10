@@ -6,21 +6,35 @@ Program Description: Bases of the character class in the platformer fighting gam
 */
 
 public class Character {
-    int x; int y; int width; int height; int jumpHeight; boolean isJumping; int jumpCounter;
-    public Character(int x, int y, int width, int height, int jumpHeight, boolean isJumping, int jumpCounter) {
+	static public int width = 30, height = 30, jumpHeight = 100;
+	
+    public int x, y, jumpCounter, health;
+	boolean isJumping; 
+	
+    public Character(int x, int y) {
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
-        this.jumpHeight = jumpHeight;
-        this.isJumping = isJumping;
-        this.jumpCounter = jumpCounter;
+        this.isJumping = false;
+        this.jumpCounter = 0;
+		this.health = 100;
     }
-    public void startJump() {
+	
+	public void move(boolean[] keysPressed) {
+		if (keysPressed[0] && x > 0) {
+             // Adjust the speed of left movement
+            x -= 5;
+        }
+        if (keysPressed[1] && x < 400 - width) {
+            // Adjust the speed of right movement
+            x += 5;
+        }
+	}
+	
+    public void jump() {
         isJumping = true;
         new Thread(new Runnable() {
             public void run() {
-                while (jumpCounter <= jumpHeight) {
+                while (jumpCounter <= Character.jumpHeight) {
                     // Adjust the speed of falling
                     y -= 5;
                     // Adjust the speed of jumping
@@ -31,16 +45,7 @@ public class Character {
                         e.printStackTrace();
                     }
                 }
-                while (jumpCounter > 0) {
-                    y += 5;
-                    jumpCounter -= 5;
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                y = Math.max(y, 0);
+                jumpCounter = 0;
                 isJumping = false;
             }
         }).start();

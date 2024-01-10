@@ -15,13 +15,17 @@ import java.awt.event.KeyListener;
 
 public class Smash extends JFrame {
 
-    public boolean isLeftKeyPressed = false;
-    public boolean isRightKeyPressed = false;
-    private int platformY = 320;
+    public boolean[] p1KeysPressed = new boolean[2]; // [A, D]
+	public boolean[] p2KeysPressed = new boolean[2]; // [J, L]
+    
+	// change when playtform class is created
+	private int platformY = 320;
     private int platformWidth = 400;
+	//
 
     //Character
-    Character p1 = new Character(50, 0, 30, 30, 100, false, 0);
+    Character p1 = new Character(50, 0);
+	Character p2 = new Character(250, 0);
 
     //Base Constructor
     public Smash() {
@@ -48,7 +52,7 @@ public class Smash extends JFrame {
             public void keyPressed(KeyEvent e) {
                 handleKeyPress(e);
             }
-
+			
             public void keyReleased(KeyEvent e) {
                 handleKeyRelease(e);
             }
@@ -59,54 +63,61 @@ public class Smash extends JFrame {
 
     public void handleKeyPress(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_LEFT) {
-            isLeftKeyPressed = true;
-        } else if (key == KeyEvent.VK_RIGHT) {
-            isRightKeyPressed = true;
-        } else if (key == KeyEvent.VK_SPACE && !p1.isJumping && isOnPlatform()) {
-            p1.startJump();
-        }
+        if (key == KeyEvent.VK_A) {
+            p1KeysPressed[0] = true;
+        } else if (key == KeyEvent.VK_D) {
+            p1KeysPressed[1] = true;
+        } else if (key == KeyEvent.VK_W && isOnPlatform(p1)) {
+            p1.jump();
+        } else if (key == KeyEvent.VK_J) {
+            p2KeysPressed[0] = true;
+        } else if (key == KeyEvent.VK_L) {
+            p2KeysPressed[1] = true;
+        } else if (key == KeyEvent.VK_I && isOnPlatform(p2)) {
+            p2.jump();
+        } 
     }
 
     public void handleKeyRelease(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_LEFT) {
-            isLeftKeyPressed = false;
-        } else if (key == KeyEvent.VK_RIGHT) {
-            isRightKeyPressed = false;
+        if (key == KeyEvent.VK_A) {
+            p1KeysPressed[0] = false;
+        } else if (key == KeyEvent.VK_D) {
+            p1KeysPressed[1] = false;
+        } else if (key == KeyEvent.VK_J) {
+            p2KeysPressed[0] = false;
+        } else if (key == KeyEvent.VK_L) {
+            p2KeysPressed[1] = false;
         }
     }
 
     
 
     public void update() {
-        if (!isOnPlatform() && !p1.isJumping) {
+		// move to character class once platform class is made
+        if (!isOnPlatform(p1) && !p1.isJumping) {
              // Adjust the speed of falling
             p1.y += 5;
         }
+		if (!isOnPlatform(p2) && !p2.isJumping) {
+             // Adjust the speed of falling
+            p2.y += 5;
+        }
+		//
 
         // Horizontal movement control
-        if (isLeftKeyPressed && p1.x > 0) {
-             // Adjust the speed of left movement
-            p1.x -= 5;
-        }
-        if (isRightKeyPressed && p1.x < getWidth() - p1.width) {
-            // Adjust the speed of right movement
-            p1.x += 5;
-        }
-        
-        // Boundaries to keep the player in the map
-        p1.x = Math.max(p1.x, 0);
-        p1.x = Math.min(p1.x, getWidth() - p1.width);
-        p1.y = Math.min(p1.y, getHeight() - p1.height);
+        p1.move(p1KeysPressed);
+		p2.move(p2KeysPressed);
     }
 
-    public boolean isOnPlatform() {
-        return p1.y + p1.height >= platformY &&
-               p1.y + p1.height <= platformY + 5 &&
-               p1.x + p1.width >= 0 &&
-               p1.x <= platformWidth - p1.width;
+	// move to character class once platform class is made
+    public boolean isOnPlatform(Character Player) {
+        return Player.y + Player.height >= platformY &&
+               Player.y + Player.height <= platformY + 5 &&
+               Player.x + Player.width >= 0 &&
+               Player.x <= platformWidth - Player.width;
     }
+	//
 
     // Gameplay Panel
     public class SmashPanel extends JPanel {
@@ -124,7 +135,8 @@ public class Smash extends JFrame {
 
             // Draw character
             g.setColor(Color.RED);
-            g.fillRect(p1.x, p1.y, p1.width, p1.height);
+            g.fillRect(p1.x, p1.y, Character.width, Character.height);
+			g.fillRect(p2.x, p2.y, Character.width, Character.height);
         }
     }
 
