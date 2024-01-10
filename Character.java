@@ -19,15 +19,18 @@ public class Character {
 		this.health = 100;
     }
 	
-	public void move(boolean[] keysPressed) {
-		if (keysPressed[0] && x > 0) {
+	public void move(boolean[] keysPressed, boolean isOnPlatform) {
+		if (keysPressed[1] && x > 0) {
              // Adjust the speed of left movement
             x -= 5;
         }
-        if (keysPressed[1] && x < 400 - width) {
+        if (keysPressed[3] && x < 400 - width) {
             // Adjust the speed of right movement
             x += 5;
         }
+		if (!isOnPlatform && !isJumping) {
+			y += 5;
+		}
 	}
 	
     public void jump() {
