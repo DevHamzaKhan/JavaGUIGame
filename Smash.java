@@ -12,6 +12,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class Smash extends JFrame {
     public boolean[] p1KeysPressed = new boolean[4]; // [W, A, S, D, E]
@@ -19,6 +25,7 @@ public class Smash extends JFrame {
     public int screen_width = 960;
     public int screen_height = 520;
     public int mode = (int)Math.round((Math.random() * 4));
+    Color platform_color;
 
     //Character
     Character p1 = new Character(50, 0, 1, 5, 5, 5);
@@ -30,7 +37,7 @@ public class Smash extends JFrame {
         new Platform(380, 360, 200, 10, (int)Math.round(Math.random())),
         new Platform(670, 360, 200, 10, (int)Math.round(Math.random())),
         new Platform(186, 260, 200, 10, (int)Math.round(Math.random())),
-        new Platform(572, 260, 200, 10, (int)Math.round(Math.random())),
+        new Platform(572,  260, 200, 10, (int)Math.round(Math.random())),
         new Platform(380, 160, 200, 10, (int)Math.round(Math.random()))
 	};
 	
@@ -146,47 +153,38 @@ public class Smash extends JFrame {
 
     public void GameMode(){
             switch (mode) {
+                case 0:
+                    platform_color = Color.RED;
+                    break;
                 case 1:
                     p1.speed /= 2;
                     p2.speed /= 2;
+                    platform_color = Color.ORANGE;
                     break;
                 case 2:
                     p1.speed *= 2;
                     p2.speed *= 2;
+                    platform_color = Color.CYAN;
                     break;
                 case 3:
                     p1.jumpHeight = 150;
                     p2.jumpHeight = 150;
+                    platform_color = Color.BLACK;
                     break;
             }
     }
     // Gameplay Panel
     public class SmashPanel extends JPanel {
-
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            //Background Image
-            //g.drawImage(backgroundImage, 0, 0, this);
 
+            Graphics2D graphics2d = (Graphics2D) g;
             // Draw platform
-            switch (mode) {
-                case 0:
-                    g.setColor(Color.RED);
-                    break;
-                case 1:
-                    g.setColor(Color.ORANGE);
-                    break;
-                case 2:
-                    g.setColor(Color.CYAN);
-                    break;
-                case 3:
-                    g.setColor(Color.BLACK);
-                    break;
-            }
+            g.setColor(platform_color);
 
             for (Platform p : platforms) {
                 //if (p.active == 1){
-                    g.fillRect(p.x, p.y, p.width, p.height);
+                    p.draw(graphics2d);
                 //}
             }
 
