@@ -17,13 +17,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class Smash extends JFrame {
-
     public boolean[] p1KeysPressed = new boolean[4]; // [W, A, S, D, E]
 	public boolean[] p2KeysPressed = new boolean[4]; // [I, J, K, L, O]
 
     //Character
-    Character p1 = new Character(50, 0);
-	Character p2 = new Character(250, 0);
+    Character p1 = new Character(50, 0, 1);
+	Character p2 = new Character(250, 0, 0);
 
     Platform [] platforms = {
         new Platform(0, 320, 400, 5, 1, true),
@@ -68,42 +67,62 @@ public class Smash extends JFrame {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_A) {
             p1KeysPressed[1] = true;
-        } else if (key == KeyEvent.VK_D) {
+        } 
+		else if (key == KeyEvent.VK_D) {
             p1KeysPressed[3] = true;
-        } else if (key == KeyEvent.VK_W) {
+        } 
+		else if (key == KeyEvent.VK_W) {
             p1KeysPressed[0] = true;
 			if (p1.isOnPlatform(platforms))
 				p1.jump();
-        } else if (key == KeyEvent.VK_J) {
+        } 
+		else if (key == KeyEvent.VK_E) {
+			p2.takeDamage(p1.attack());
+		} 
+		else if (key == KeyEvent.VK_J) {
             p2KeysPressed[1] = true;
-        } else if (key == KeyEvent.VK_L) {
+        } 
+		else if (key == KeyEvent.VK_L) {
             p2KeysPressed[3] = true;
-        } else if (key == KeyEvent.VK_I) {
+        } 
+		else if (key == KeyEvent.VK_I) {
 			p2KeysPressed[0] = true;
 			if (p2.isOnPlatform(platforms))
 				p2.jump();
         } 
+		else if (key == KeyEvent.VK_O) {
+			p1.takeDamage(p2.attack());
+		} 
     }
 
     public void handleKeyRelease(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_A) {
             p1KeysPressed[1] = false;
-        } else if (key == KeyEvent.VK_D) {
+        } 
+		else if (key == KeyEvent.VK_D) {
             p1KeysPressed[3] = false;
-        } else if (key == KeyEvent.VK_J) {
+        } 
+		else if (key == KeyEvent.VK_W) {
+			p1KeysPressed[0] = false;
+		} 
+		else if (key == KeyEvent.VK_J) {
             p2KeysPressed[1] = false;
-        } else if (key == KeyEvent.VK_L) {
+        } 
+		else if (key == KeyEvent.VK_L) {
             p2KeysPressed[3] = false;
         }
+		else if (key == KeyEvent.VK_I) {
+			p2KeysPressed[0] = false;
+		} 
     }
 
     
 
     public void update() {
 		// Movement control
-        p1.move(p1KeysPressed, platforms);
-		p2.move(p2KeysPressed, platforms);
+        p1.updateCharacter(p1KeysPressed, platforms);
+		p2.updateCharacter(p2KeysPressed, platforms);
     }
 
 
