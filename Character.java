@@ -99,14 +99,14 @@ public class Character {
 	
 	public boolean isOnPlatform(Platform[] platforms){
         for (Platform p : platforms) {
-            //if (p.active == 1){
+            if (p.active == 1){
                 if (y + Character.height >= p.y &&
                     y + Character.height <= p.y + 5 &&
                     x + Character.width >= p.x &&
                     x <= p.x + p.width) {
                         return true;
                 }
-           //}
+            }
         }
         return false;
     }
