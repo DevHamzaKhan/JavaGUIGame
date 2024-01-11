@@ -185,15 +185,24 @@ public class Smash extends JFrame {
             }
 
             for (Platform p : platforms) {
-                //if (p.active == 1){
+                if (p.active == 1){
                     g.fillRect(p.x, p.y, p.width, p.height);
-                //}
+                }
             }
 
             // Draw character
             g.setColor(Color.GREEN);
             g.fillRect(p1.x, p1.y, Character.width, Character.height);
 			g.fillRect(p2.x, p2.y, Character.width, Character.height);
+			
+			// Draw health bars
+			if (p1.health >= 0) {
+				g.fillRect(30, 20, 2 * p1.health, 30);
+			}
+			if (p2.health >= 0) {
+				int hpBarWidth = 2 * p2.health;
+				g.fillRect(screen_width - hpBarWidth - 30, 20, hpBarWidth, 30);
+			}
         }
     }
 
