@@ -1,39 +1,43 @@
 /*
 Programmers: Hamza Khan & Leo Chen
-Program Name: Character Version 1
-Program Date: 12/21/2023
+Program Name: Smash Version 2
+Program Date: 1/10/2023
 Program Description: Bases of the character class in the platformer fighting game, will expand on later adding more components
 */
 
 import java.awt.Rectangle;
 
 public class Character {
-	static public int width = 30, height = 30, jumpHeight = 100;
+	static public int width = 30, height = 30;
+    public int jumpHeight = 100;
 	
-    public int x, y, jumpCounter, health, horizontalFacing, facing;
+    public int x, y, jumpCounter, health, horizontalFacing, facing, speed, gravity, jump;
 	boolean isJumping; 
 	
-    public Character(int x, int y, int horizontalFacing) {
+    public Character(int x, int y, int horizontalFacing, int speed, int gravity, int jump) {
         this.x = x;
         this.y = y;
 		this.horizontalFacing = horizontalFacing;
+        this.speed = speed;
+        this.gravity = gravity;
+        this.jump = jump;
         this.isJumping = false;
         this.jumpCounter = 0;
 		this.health = 100;
     }
 	
-	public void updateCharacter(boolean[] keysPressed, Platform[] platforms) {
+	public void updateCharacter(boolean[] keysPressed, Platform[] platforms, int mode) {
 		if (keysPressed[1] && x > 0) {
              // Adjust the speed of left movement
-            x -= 5;
+            x -= speed;
 			horizontalFacing = 0;
         }
-        if (keysPressed[3] && x < 400 - width) {
+        if (keysPressed[3] && x < 960 - width) {
             // Adjust the speed of right movement
-            x += 5;
+            x += speed;
 			horizontalFacing = 1;
         }
-		if ((!isOnPlatform(platforms) || keysPressed[2]) && !isJumping) {
+		if ((!isOnPlatform(platforms) || keysPressed[2]) && !isJumping && (y + width) < platforms[0].y) {
 			y += 5;
 		}
 		
@@ -52,11 +56,11 @@ public class Character {
         isJumping = true;
         new Thread(new Runnable() {
             public void run() {
-                while (jumpCounter <= Character.jumpHeight) {
+                while (jumpCounter <= (jumpHeight)) {
                     // Adjust the speed of falling
-                    y -= 5;
+                    y -= gravity;
                     // Adjust the speed of jumping
-                    jumpCounter += 5;
+                    jumpCounter += jump;
                     try {
                         Thread.sleep(10);
                     } catch (InterruptedException e) {
@@ -95,12 +99,14 @@ public class Character {
 	
 	public boolean isOnPlatform(Platform[] platforms){
         for (Platform p : platforms) {
-            if (y + Character.height >= p.y &&
-                y + Character.height <= p.y + 5 &&
-                x + Character.width >= p.x &&
-                x + Character.width <= p.x + p.width) {
-                    return true;
-            }
+            //if (p.active == 1){
+                if (y + Character.height >= p.y &&
+                    y + Character.height <= p.y + 5 &&
+                    x + Character.width >= p.x &&
+                    x <= p.x + p.width) {
+                        return true;
+                }
+           //}
         }
         return false;
     }

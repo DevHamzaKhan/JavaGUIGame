@@ -1,38 +1,43 @@
 /*
 Programmers: Hamza Khan & Leo Chen
-Program Name: Smash Version 1
-Program Date: 12/21/2023
-Program Description: Platformer game where character can move around and jump
+Program Name: Smash Version 2
+Program Date: 1/10/2023
+Program Description: Platformer game where 2 characters can move around and jump onto platforms. There are multiple different maps with effects.
 */
 
 //Imports
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
 
 public class Smash extends JFrame {
     public boolean[] p1KeysPressed = new boolean[4]; // [W, A, S, D, E]
 	public boolean[] p2KeysPressed = new boolean[4]; // [I, J, K, L, O]
+    public int screen_width = 960;
+    public int screen_height = 520;
+    public int mode = (int)Math.round((Math.random() * 4));
 
     //Character
-    Character p1 = new Character(50, 0, 1);
-	Character p2 = new Character(250, 0, 0);
+    Character p1 = new Character(50, 0, 1, 5, 5, 5);
+	Character p2 = new Character(250, 0, 0, 5, 5, 5);
 
     Platform [] platforms = {
-        new Platform(0, 320, 400, 5, 1, true),
-        new Platform(100, 250, 200, 5, 1, true)
+        new Platform(0, 460, 960, 20, 1),
+        new Platform(90, 360, 200, 10, (int)Math.round(Math.random())),
+        new Platform(380, 360, 200, 10, (int)Math.round(Math.random())),
+        new Platform(670, 360, 200, 10, (int)Math.round(Math.random())),
+        new Platform(186, 260, 200, 10, (int)Math.round(Math.random())),
+        new Platform(572, 260, 200, 10, (int)Math.round(Math.random())),
+        new Platform(380, 160, 200, 10, (int)Math.round(Math.random()))
 	};
 	
     //Base Constructor
     public Smash() {
         setTitle("Smash Game");
-        setSize(960, 520);
+        setSize(screen_width, screen_height);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -46,6 +51,8 @@ public class Smash extends JFrame {
             }
         });
         timer.start();
+
+        GameMode();
 
         //Key listener and Inputs
         addKeyListener(new KeyListener() {
@@ -133,29 +140,58 @@ public class Smash extends JFrame {
 
     public void update() {
 		// Movement control
-        p1.updateCharacter(p1KeysPressed, platforms);
-		p2.updateCharacter(p2KeysPressed, platforms);
+        p1.updateCharacter(p1KeysPressed, platforms, mode);
+		p2.updateCharacter(p2KeysPressed, platforms, mode);
     }
 
-
+    public void GameMode(){
+            switch (mode) {
+                case 1:
+                    p1.speed /= 2;
+                    p2.speed /= 2;
+                    break;
+                case 2:
+                    p1.speed *= 2;
+                    p2.speed *= 2;
+                    break;
+                case 3:
+                    p1.jumpHeight = 150;
+                    p2.jumpHeight = 150;
+                    break;
+            }
+    }
     // Gameplay Panel
     public class SmashPanel extends JPanel {
 
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-
             //Background Image
             //g.drawImage(backgroundImage, 0, 0, this);
 
             // Draw platform
-            g.setColor(Color.GREEN);
-            g.fillRect(platforms[0].x, platforms[0].y, platforms[0].width, platforms[0].height);
+            switch (mode) {
+                case 0:
+                    g.setColor(Color.RED);
+                    break;
+                case 1:
+                    g.setColor(Color.ORANGE);
+                    break;
+                case 2:
+                    g.setColor(Color.CYAN);
+                    break;
+                case 3:
+                    g.setColor(Color.BLACK);
+                    break;
+            }
 
-            g.setColor(Color.RED);
-            g.fillRect(platforms[1].x, platforms[1].y, platforms[1].width, platforms[1].height);
+            for (Platform p : platforms) {
+                //if (p.active == 1){
+                    g.fillRect(p.x, p.y, p.width, p.height);
+                //}
+            }
 
             // Draw character
-            g.setColor(Color.RED);
+            g.setColor(Color.GREEN);
             g.fillRect(p1.x, p1.y, Character.width, Character.height);
 			g.fillRect(p2.x, p2.y, Character.width, Character.height);
         }
