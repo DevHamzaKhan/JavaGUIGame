@@ -33,7 +33,7 @@ public class Character {
             x += 5;
 			horizontalFacing = 1;
         }
-		if (!isOnPlatform(platforms) && !isJumping) {
+		if ((!isOnPlatform(platforms) || keysPressed[2]) && !isJumping) {
 			y += 5;
 		}
 		

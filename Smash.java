@@ -75,7 +75,10 @@ public class Smash extends JFrame {
             p1KeysPressed[0] = true;
 			if (p1.isOnPlatform(platforms))
 				p1.jump();
-        } 
+        }
+		else if (key == KeyEvent.VK_S) {
+			p1KeysPressed[2] = true;
+		}
 		else if (key == KeyEvent.VK_E) {
 			p2.takeDamage(p1.attack());
 		} 
@@ -90,6 +93,9 @@ public class Smash extends JFrame {
 			if (p2.isOnPlatform(platforms))
 				p2.jump();
         } 
+		else if (key == KeyEvent.VK_K) {
+			p2KeysPressed[2] = true;
+		}
 		else if (key == KeyEvent.VK_O) {
 			p1.takeDamage(p2.attack());
 		} 
@@ -106,6 +112,9 @@ public class Smash extends JFrame {
 		else if (key == KeyEvent.VK_W) {
 			p1KeysPressed[0] = false;
 		} 
+		else if (key == KeyEvent.VK_S) {
+			p1KeysPressed[2] = false;
+		}
 		else if (key == KeyEvent.VK_J) {
             p2KeysPressed[1] = false;
         } 
@@ -114,7 +123,10 @@ public class Smash extends JFrame {
         }
 		else if (key == KeyEvent.VK_I) {
 			p2KeysPressed[0] = false;
-		} 
+		}
+		else if (key == KeyEvent.VK_K) {
+			p2KeysPressed[2] = false;
+		}
     }
 
     
