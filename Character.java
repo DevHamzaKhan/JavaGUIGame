@@ -8,7 +8,7 @@ Program Description: Bases of the character class in the platformer fighting gam
 import java.awt.Rectangle;
 
 public class Character {
-	static public int width = 30, height = 30;
+	static public int width = 96, height = 96;
     public int jumpHeight = 100;
 	
     public int x, y, jumpCounter, health, horizontalFacing, facing, speed, gravity, jump;
