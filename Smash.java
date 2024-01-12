@@ -48,8 +48,7 @@ public class Smash extends JFrame {
         new GameImage("RunAnimation/tile002.png", p1.x, p1.y, 96, 96),
         new GameImage("RunAnimation/tile003.png", p1.x, p1.y, 96, 96),
         new GameImage("RunAnimation/tile004.png", p1.x, p1.y, 96, 96),
-        new GameImage("RunAnimation/tile005.png", p1.x, p1.y, 96, 96),
-        new GameImage("RunAnimation/tile006.png", p1.x, p1.y, 96, 96)
+        new GameImage("RunAnimation/tile005.png", p1.x, p1.y, 96, 96)
     };
     GameImage [] character_attack = {
         new GameImage("AttackAnimation/tile000.png", p1.x, p1.y, 96, 96),
@@ -58,6 +57,14 @@ public class Smash extends JFrame {
         new GameImage("AttackAnimation/tile003.png", p1.x, p1.y, 96, 96),
         new GameImage("AttackAnimation/tile004.png", p1.x, p1.y, 96, 96),
         new GameImage("AttackAnimation/tile005.png", p1.x, p1.y, 96, 96)
+    };
+    GameImage [] character_idle = {
+        new GameImage("IdleAnimation/tile000.png", p1.x, p1.y, 96, 96),
+        new GameImage("IdleAnimation/tile001.png", p1.x, p1.y, 96, 96),
+        new GameImage("IdleAnimation/tile002.png", p1.x, p1.y, 96, 96),
+        new GameImage("IdleAnimation/tile003.png", p1.x, p1.y, 96, 96),
+        new GameImage("IdleAnimation/tile004.png", p1.x, p1.y, 96, 96),
+        new GameImage("IdleAnimation/tile005.png", p1.x, p1.y, 96, 96)
     };
     Platform [] platforms = {
         new Platform(0, 460, 960, 20, 1, "newplatform.png"),
@@ -140,9 +147,11 @@ public class Smash extends JFrame {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_A) {
             p1KeysPressed[1] = true;
+            p1.state = "left";
         } 
 		else if (key == KeyEvent.VK_D) {
             p1KeysPressed[3] = true;
+            p1.state = "right";
         } 
 		else if (key == KeyEvent.VK_W) {
             p1KeysPressed[0] = true;
@@ -184,9 +193,11 @@ public class Smash extends JFrame {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_A) {
             p1KeysPressed[1] = false;
+            p1.state = "idle";
         } 
 		else if (key == KeyEvent.VK_D) {
             p1KeysPressed[3] = false;
+            p1.state = "idle";
         } 
 		else if (key == KeyEvent.VK_W) {
 			p1KeysPressed[0] = false;
@@ -272,7 +283,7 @@ public class Smash extends JFrame {
             g.setColor(Color.GREEN);
             character_attack[0].x = p1.x;
             character_attack[0].y = p1.y;
-            character_attack[0].draw(g);
+            p1.draw(g, character_run, character_run, character_attack, character_attack, character_idle);
             g.fillRect(p2.x, p2.y, Character.width, Character.height);
             
             // Draw bullets

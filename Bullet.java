@@ -3,7 +3,7 @@ import java.awt.Graphics;
 
 public class Bullet {
     Character owner;
-    int x, y, velocity, width = 5, height = 5;  // Adjusted size for better visibility
+    int x, y, velocity, width = 5, height = 5;
 
     public Bullet(int velocity, Character owner) {
         this.velocity = velocity;
@@ -11,17 +11,17 @@ public class Bullet {
     }
 
     public void DrawBullet(Graphics g) {
-        g.setColor(Color.RED);  // Set the bullet color (adjust as needed)
-        g.fillOval(x, y, width, height);  // Use fillOval for a bullet shape
+        g.setColor(Color.RED);
+        g.fillOval(x, y, width, height);
     }
 
     public void Shoot() {
         if (owner != null) {
             System.out.println("Bullet Shot");
             if (owner.horizontalFacing == 0) {
-                x += velocity;  // Move the bullet to the right
+                x += velocity;
             } else {
-                x -= velocity;  // Move the bullet to the left
+                x -= velocity; 
             }
             System.out.println("Bullet Coordinates: (" + x + ", " + y + ")");
         }

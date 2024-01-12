@@ -9,9 +9,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Character {
-	static public int width = 96, height = 96;
-    public int jumpHeight = 100;
-    public boolean movingLeft, movingRight, isAttacking;
+    public String state = "idle";
+	static public int width = 96, height = 96; 
+    public int jumpHeight = 100, spriteCounter = 0;
 	
     public int x, y, jumpCounter, health, horizontalFacing, facing, speed, gravity, jump;
 	boolean isJumping; 
@@ -83,9 +83,11 @@ public class Character {
 			return new Rectangle(x, y + Character.height, Character.width, Character.height);
 		}
 		else if (horizontalFacing == 0) {
+            state = "attackL";
 			return new Rectangle(x - Character.width, y, Character.width, Character.height);
 		}
 		else {
+            state = "attackR";
 			return new Rectangle(x + Character.width, y, Character.width, Character.height);
 		}
 		
@@ -112,9 +114,32 @@ public class Character {
         }
         return false;
     }
-    public void draw(Graphics g, GameImage [] anim){
-        if (movingRight){
-            anim[i].draw(g);
+    public void draw(Graphics g, GameImage [] walkLeft, GameImage [] walkRight, GameImage [] attackLeft, GameImage [] attackRight, GameImage [] idle){
+        switch(state){
+            case "right":
+                walkRight[spriteCounter].draw(g);
+                break;
+            case "left":
+                walkLeft[spriteCounter].draw(g);
+                break;
+            case "attackR":
+                attackRight[spriteCounter].draw(g);
+                break;
+            case "attackL":
+                attackLeft[spriteCounter].draw(g);
+                break;
+            case "idle":
+                idle[spriteCounter].draw(g);
+                break;
+        }
+        spriteCounter += 1;
+        if (spriteCounter == 5){
+            if (state.equals("attackL")){
+                state = "idle";
+            } else if (state.equals("attackR")){
+                state = "idle";
+            }
+            spriteCounter = 0;
         }
     }
 }
