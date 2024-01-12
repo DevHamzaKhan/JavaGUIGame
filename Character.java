@@ -5,11 +5,13 @@ Program Date: 1/10/2023
 Program Description: Bases of the character class in the platformer fighting game, will expand on later adding more components
 */
 
+import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Character {
 	static public int width = 96, height = 96;
     public int jumpHeight = 100;
+    public boolean movingLeft, movingRight, isAttacking;
 	
     public int x, y, jumpCounter, health, horizontalFacing, facing, speed, gravity, jump;
 	boolean isJumping; 
@@ -109,5 +111,10 @@ public class Character {
             }
         }
         return false;
+    }
+    public void draw(Graphics g, GameImage [] anim){
+        if (movingRight){
+            anim[i].draw(g);
+        }
     }
 }

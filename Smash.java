@@ -270,6 +270,8 @@ public class Smash extends JFrame {
 
             
             g.setColor(Color.GREEN);
+            character_attack[0].x = p1.x;
+            character_attack[0].y = p1.y;
             character_attack[0].draw(g);
             g.fillRect(p2.x, p2.y, Character.width, Character.height);
             
