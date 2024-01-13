@@ -37,34 +37,94 @@ public class Smash extends JFrame {
     Character p1 = new Character(50, 0, 1, 5, 5, 5);
 	Character p2 = new Character(250, 0, 0, 5, 5, 5);
     GameImage [] backgrounds = {
-        new GameImage("FireBackground.png", 0, 0, screen_width, screen_height),
-        new GameImage("SandBackground.png", 0, 0, screen_width, screen_height),
-        new GameImage("IceBackground.png", 0, 0, screen_width, screen_height),
-        new GameImage("SpaceBackground.png", 0, 0, screen_width, screen_height)
+        new GameImage("FireBackground.png", 0, 0, screen_width, screen_height, false),
+        new GameImage("SandBackground.png", 0, 0, screen_width, screen_height, false),
+        new GameImage("IceBackground.png", 0, 0, screen_width, screen_height, false),
+        new GameImage("SpaceBackground.png", 0, 0, screen_width, screen_height, false)
     };
-    GameImage [] character_run = {
-        new GameImage("RunAnimation/tile000.png", p1.x, p1.y, 96, 96),
-        new GameImage("RunAnimation/tile001.png", p1.x, p1.y, 96, 96),
-        new GameImage("RunAnimation/tile002.png", p1.x, p1.y, 96, 96),
-        new GameImage("RunAnimation/tile003.png", p1.x, p1.y, 96, 96),
-        new GameImage("RunAnimation/tile004.png", p1.x, p1.y, 96, 96),
-        new GameImage("RunAnimation/tile005.png", p1.x, p1.y, 96, 96)
+    SpriteImage [] character_runR = {
+        new SpriteImage("RunAnimation/tile000.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("RunAnimation/tile001.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("RunAnimation/tile002.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("RunAnimation/tile003.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("RunAnimation/tile004.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("RunAnimation/tile005.png", p1.x, p1.y, 96, 96, false, p1)
     };
-    GameImage [] character_attack = {
-        new GameImage("AttackAnimation/tile000.png", p1.x, p1.y, 96, 96),
-        new GameImage("AttackAnimation/tile001.png", p1.x, p1.y, 96, 96),
-        new GameImage("AttackAnimation/tile002.png", p1.x, p1.y, 96, 96),
-        new GameImage("AttackAnimation/tile003.png", p1.x, p1.y, 96, 96),
-        new GameImage("AttackAnimation/tile004.png", p1.x, p1.y, 96, 96),
-        new GameImage("AttackAnimation/tile005.png", p1.x, p1.y, 96, 96)
+    SpriteImage [] character_jumpR = {
+        new SpriteImage("JumpAnimation/tile000.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("JumpAnimation/tile001.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("JumpAnimation/tile002.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("JumpAnimation/tile003.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("JumpAnimation/tile004.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("JumpAnimation/tile005.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("JumpAnimation/tile006.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("JumpAnimation/tile007.png", p1.x, p1.y, 96, 96, false, p1)
     };
-    GameImage [] character_idle = {
-        new GameImage("IdleAnimation/tile000.png", p1.x, p1.y, 96, 96),
-        new GameImage("IdleAnimation/tile001.png", p1.x, p1.y, 96, 96),
-        new GameImage("IdleAnimation/tile002.png", p1.x, p1.y, 96, 96),
-        new GameImage("IdleAnimation/tile003.png", p1.x, p1.y, 96, 96),
-        new GameImage("IdleAnimation/tile004.png", p1.x, p1.y, 96, 96),
-        new GameImage("IdleAnimation/tile005.png", p1.x, p1.y, 96, 96)
+    SpriteImage [] character_attackR = {
+        new SpriteImage("AttackAnimation/tile000.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("AttackAnimation/tile001.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("AttackAnimation/tile002.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("AttackAnimation/tile003.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("AttackAnimation/tile004.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("AttackAnimation/tile005.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("AttackAnimation/tile006.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("AttackAnimation/tile007.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("AttackAnimation/tile008.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("AttackAnimation/tile009.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("AttackAnimation/tile0010.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("AttackAnimation/tile0011.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("AttackAnimation/tile0012.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("AttackAnimation/tile0013.png", p1.x, p1.y, 96, 96, false, p1)
+    };
+    SpriteImage [] character_idleR = {
+        new SpriteImage("IdleAnimation/tile000.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("IdleAnimation/tile001.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("IdleAnimation/tile002.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("IdleAnimation/tile003.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("IdleAnimation/tile004.png", p1.x, p1.y, 96, 96, false, p1),
+        new SpriteImage("IdleAnimation/tile005.png", p1.x, p1.y, 96, 96, false, p1)
+    };
+    SpriteImage [] character_runL = {
+        new SpriteImage("RunAnimation/tile000.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("RunAnimation/tile001.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("RunAnimation/tile002.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("RunAnimation/tile003.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("RunAnimation/tile004.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("RunAnimation/tile005.png", p1.x, p1.y, 96, 96, true, p1)
+    };
+    SpriteImage [] character_jumpL = {
+        new SpriteImage("JumpAnimation/tile000.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("JumpAnimation/tile001.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("JumpAnimation/tile002.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("JumpAnimation/tile003.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("JumpAnimation/tile004.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("JumpAnimation/tile005.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("JumpAnimation/tile006.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("JumpAnimation/tile007.png", p1.x, p1.y, 96, 96, true, p1)
+    };
+    SpriteImage [] character_attackL = {
+        new SpriteImage("AttackAnimation/tile000.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("AttackAnimation/tile001.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("AttackAnimation/tile002.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("AttackAnimation/tile003.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("AttackAnimation/tile004.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("AttackAnimation/tile005.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("AttackAnimation/tile006.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("AttackAnimation/tile007.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("AttackAnimation/tile008.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("AttackAnimation/tile009.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("AttackAnimation/tile0010.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("AttackAnimation/tile0011.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("AttackAnimation/tile0012.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("AttackAnimation/tile0013.png", p1.x, p1.y, 96, 96, true, p1)
+    };
+    SpriteImage [] character_idleL = {
+        new SpriteImage("IdleAnimation/tile000.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("IdleAnimation/tile001.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("IdleAnimation/tile002.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("IdleAnimation/tile003.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("IdleAnimation/tile004.png", p1.x, p1.y, 96, 96, true, p1),
+        new SpriteImage("IdleAnimation/tile005.png", p1.x, p1.y, 96, 96, true, p1)
     };
     Platform [] platforms = {
         new Platform(0, 460, 960, 20, 1, "newplatform.png"),
@@ -75,6 +135,7 @@ public class Smash extends JFrame {
         new Platform(572,  260, 200, 10, (int)Math.round(Math.random()), "newplatform.png"),
         new Platform(380, 160, 200, 10, (int)Math.round(Math.random()), "newplatform.png")
 	};
+    
 	ArrayList<Bullet> bullets1 = new ArrayList<Bullet>();
 	ArrayList<Bullet> bullets2 = new ArrayList<Bullet>();
     //Base Constructor
@@ -93,7 +154,7 @@ public class Smash extends JFrame {
                 update();
                 smashPanel.repaint();
                 
-                // Use iterators to avoid ConcurrentModificationException
+                // Use iterators to avoid ConcurrentModificationExcepdddddddddtion
                 Iterator<Bullet> iterator1 = bullets1.iterator();
                 while (iterator1.hasNext()) {
                     Bullet b = iterator1.next();
@@ -157,6 +218,11 @@ public class Smash extends JFrame {
             p1KeysPressed[0] = true;
 			if (p1.isOnPlatform(platforms))
 				p1.jump();
+                if (p1.horizontalFacing == 0){
+                    p1.state = "jumpL";
+                } else {
+                    p1.state = "jumpR";
+                }
         }
 		else if (key == KeyEvent.VK_S) {
 			p1KeysPressed[2] = true;
@@ -193,11 +259,15 @@ public class Smash extends JFrame {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_A) {
             p1KeysPressed[1] = false;
-            p1.state = "idle";
+            if(p1.state.equals("left")){
+                p1.state = "idleL";
+            }
         } 
 		else if (key == KeyEvent.VK_D) {
             p1KeysPressed[3] = false;
-            p1.state = "idle";
+            if(p1.state.equals("right")){
+                p1.state = "idleR";
+            }
         } 
 		else if (key == KeyEvent.VK_W) {
 			p1KeysPressed[0] = false;
@@ -281,11 +351,18 @@ public class Smash extends JFrame {
 
             
             g.setColor(Color.GREEN);
-            character_attack[0].x = p1.x;
-            character_attack[0].y = p1.y;
-            p1.draw(g, character_run, character_run, character_attack, character_attack, character_idle);
+                for (SpriteImage i : character_attackR) {i.update();}
+                for (SpriteImage i : character_idleR) {i.update();}
+                for (SpriteImage i : character_runR) {i.update();}
+                for (SpriteImage i : character_jumpR) {i.update();}
+                for (SpriteImage i : character_attackL) {i.update();}
+                for (SpriteImage i : character_idleL) {i.update();}
+                for (SpriteImage i : character_runL) {i.update();}
+                for (SpriteImage i : character_jumpL) {i.update();}
+                //for (SpriteImage i : character_) {i.update();}
+            p1.draw(g, character_runL, character_runR, character_attackL, character_attackR, character_idleL, character_idleR, character_jumpL, character_jumpR);
             g.fillRect(p2.x, p2.y, Character.width, Character.height);
-            
+                
             // Draw bullets
             g.setColor(Color.BLUE);  // Set a distinct color for bullet visibility
             for (Bullet b : bullets1) {

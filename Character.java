@@ -9,9 +9,10 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Character {
-    public String state = "idle";
+    public String state = "idleR";
 	static public int width = 96, height = 96; 
     public int jumpHeight = 100, spriteCounter = 0;
+    private long lastAnimationTime = System.currentTimeMillis();
 	
     public int x, y, jumpCounter, health, horizontalFacing, facing, speed, gravity, jump;
 	boolean isJumping; 
@@ -114,12 +115,21 @@ public class Character {
         }
         return false;
     }
-    public void draw(Graphics g, GameImage [] walkLeft, GameImage [] walkRight, GameImage [] attackLeft, GameImage [] attackRight, GameImage [] idle){
-        switch(state){
+    public void draw(Graphics g, GameImage[] walkLeft, GameImage[] walkRight, GameImage[] attackLeft, GameImage[] attackRight, GameImage[] idleLeft, GameImage[] idleRight, GameImage[] jumpLeft, GameImage[] jumpRight) {
+        int animationDelay = 30;
+        long currentTime = System.currentTimeMillis();
+    
+        switch (state) {
             case "right":
                 walkRight[spriteCounter].draw(g);
                 break;
             case "left":
+                walkLeft[spriteCounter].draw(g);
+                break;            
+            case "jumpRight":
+                walkRight[spriteCounter].draw(g);
+                break;
+            case "jumpleft":
                 walkLeft[spriteCounter].draw(g);
                 break;
             case "attackR":
@@ -128,18 +138,36 @@ public class Character {
             case "attackL":
                 attackLeft[spriteCounter].draw(g);
                 break;
-            case "idle":
-                idle[spriteCounter].draw(g);
+            case "idleL":
+                idleLeft[spriteCounter].draw(g);
                 break;
+            case "idleR":
+                idleRight[spriteCounter].draw(g);
+                break;
+            
+            case "jumpL":
+                jumpLeft[spriteCounter].draw(g);
+                break;
+            case "jumpR":
+                jumpRight[spriteCounter].draw(g);
+                break;
+            
         }
-        spriteCounter += 1;
-        if (spriteCounter == 5){
-            if (state.equals("attackL")){
-                state = "idle";
-            } else if (state.equals("attackR")){
-                state = "idle";
-            }
+    
+        if (currentTime - lastAnimationTime > animationDelay) {
+            spriteCounter += 1;
+            lastAnimationTime = currentTime;
+        }
+        if (spriteCounter == 5 && !state.startsWith("attack") && !state.startsWith("jump")) {
             spriteCounter = 0;
+        } else if (spriteCounter == 13) {
+            if (state.startsWith("attackL")) {
+                state = "idleL";
+                spriteCounter = 0;
+            } else if (state.startsWith("attackR")) {
+                state = "idleR";
+                spriteCounter = 0;
+            }
         }
     }
 }
