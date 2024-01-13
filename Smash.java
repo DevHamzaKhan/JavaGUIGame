@@ -17,7 +17,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
@@ -29,8 +28,7 @@ public class Smash extends JFrame {
 	public boolean[] p2KeysPressed = new boolean[4]; // [I, J, K, L, O]
     public int screen_width = 960;
     public int screen_height = 520;
-    public int mode = (int)Math.round((Math.random() * 4));
-    Color platform_color;
+    public int mode = (int)(Math.random() * 5);
     
 
     //Character
@@ -135,9 +133,12 @@ public class Smash extends JFrame {
         new Platform(572,  260, 200, 10, (int)Math.round(Math.random()), "newplatform.png"),
         new Platform(380, 160, 200, 10, (int)Math.round(Math.random()), "newplatform.png")
 	};
+<<<<<<< HEAD
     
 	ArrayList<Bullet> bullets1 = new ArrayList<Bullet>();
 	ArrayList<Bullet> bullets2 = new ArrayList<Bullet>();
+=======
+>>>>>>> 378fd0f82bd5b20a7369286510e94134ebcbfaa4
     //Base Constructor
     public Smash() {
         setTitle("Smash Game");
@@ -153,6 +154,7 @@ public class Smash extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 update();
                 smashPanel.repaint();
+<<<<<<< HEAD
                 
                 // Use iterators to avoid ConcurrentModificationExcepdddddddddtion
                 Iterator<Bullet> iterator1 = bullets1.iterator();
@@ -181,11 +183,12 @@ public class Smash extends JFrame {
                     b.Shoot();
                 }
                 smashPanel.repaint();
+=======
+>>>>>>> 378fd0f82bd5b20a7369286510e94134ebcbfaa4
             }
         });
 
         timer.start();
-        timer2.start();
         GameMode();
 
         //Key listener and Inputs
@@ -246,13 +249,10 @@ public class Smash extends JFrame {
 		}
 		else if (key == KeyEvent.VK_O) {
 			p1.takeDamage(p2.attack());
-		} 
-        else if (key == KeyEvent.VK_Q) {
-			bullets1.add(new Bullet(5, p1));
-		}  
-        else if (key == KeyEvent.VK_U) {
-			bullets2.add(new Bullet(5, p2));
-		} 
+		}
+		else if (key == KeyEvent.VK_U) {
+			p2.shoot();
+		} 		
     }
 
     public void handleKeyRelease(KeyEvent e) {
@@ -293,29 +293,25 @@ public class Smash extends JFrame {
 
     public void update() {
 		// Movement control
-        p1.updateCharacter(p1KeysPressed, platforms, mode);
-		p2.updateCharacter(p2KeysPressed, platforms, mode);
+        p1.updateCharacter(p1KeysPressed, platforms, p2.bullets);
+		p2.updateCharacter(p2KeysPressed, platforms, p1.bullets);
     }
 
     public void GameMode(){
             switch (mode) {
                 case 0:
-                    platform_color = Color.RED;
                     break;
                 case 1:
                     p1.speed /= 2;
                     p2.speed /= 2;
-                    platform_color = Color.ORANGE;
                     break;
                 case 2:
                     p1.speed *= 2;
                     p2.speed *= 2;
-                    platform_color = Color.CYAN;
                     break;
                 case 3:
                     p1.jumpHeight = 150;
                     p2.jumpHeight = 150;
-                    platform_color = Color.BLACK;
                     break;
             }
     }
@@ -362,6 +358,7 @@ public class Smash extends JFrame {
                 //for (SpriteImage i : character_) {i.update();}
             p1.draw(g, character_runL, character_runR, character_attackL, character_attackR, character_idleL, character_idleR, character_jumpL, character_jumpR);
             g.fillRect(p2.x, p2.y, Character.width, Character.height);
+<<<<<<< HEAD
                 
             // Draw bullets
             g.setColor(Color.BLUE);  // Set a distinct color for bullet visibility
@@ -373,6 +370,8 @@ public class Smash extends JFrame {
                 System.out.println("Bullet 2 Drawn");
                 b.DrawBullet(graphics2d);
             }
+=======
+>>>>>>> 378fd0f82bd5b20a7369286510e94134ebcbfaa4
             
 			// Draw health bars
             g.setColor(Color.GREEN);
@@ -382,6 +381,10 @@ public class Smash extends JFrame {
 			if (p2.health >= 0) {
 				int hpBarWidth = 2 * p2.health;
 				g.fillRect(screen_width - hpBarWidth - 30, 20, hpBarWidth, 30);
+			}
+			
+			for (Bullet bullet: p2.bullets) {
+				g.fillRect((int)bullet.getX(), (int)bullet.getY(), (int)bullet.getWidth(), (int)bullet.getHeight());
 			}
         }
     }

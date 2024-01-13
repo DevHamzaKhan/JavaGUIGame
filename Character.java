@@ -7,12 +7,14 @@ Program Description: Bases of the character class in the platformer fighting gam
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 public class Character {
     public String state = "idleR";
 	static public int width = 96, height = 96; 
     public int jumpHeight = 100, spriteCounter = 0;
     private long lastAnimationTime = System.currentTimeMillis();
+	public ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	
     public int x, y, jumpCounter, health, horizontalFacing, facing, speed, gravity, jump;
 	boolean isJumping; 
@@ -29,7 +31,7 @@ public class Character {
 		this.health = 100;
     }
 	
-	public void updateCharacter(boolean[] keysPressed, Platform[] platforms, int mode) {
+	public void updateCharacter(boolean[] keysPressed, Platform[] platforms, ArrayList<Bullet> enemyBullets) {
 		if (keysPressed[1] && x > 0) {
              // Adjust the speed of left movement
             x -= speed;
@@ -53,6 +55,8 @@ public class Character {
 		else {
 			facing = 0;
 		}
+		
+		updateBullets(enemyBullets);
 	}
 	
     public void jump() {
@@ -91,7 +95,15 @@ public class Character {
             state = "attackR";
 			return new Rectangle(x + Character.width, y, Character.width, Character.height);
 		}
-		
+	}
+	
+	public void shoot() {
+		if (horizontalFacing == 0) {
+			bullets.add(new Bullet(this.x - Bullet.width, this.y + this.height / 2 - Bullet.height / 2, horizontalFacing, 5));
+		}
+		else {
+			bullets.add(new Bullet(this.x + this.width, this.y + this.height / 2 - Bullet.height / 2, horizontalFacing, 5));
+		}
 	}
 	
 	public void takeDamage(Rectangle attack) {
@@ -99,6 +111,36 @@ public class Character {
 		
 		if (hitbox.intersects(attack)){
 			health -= 10;
+		}
+	}
+	
+	public boolean takeDamage(Bullet attack) {
+		Rectangle hitbox = new Rectangle(x, y, Character.width, Character.height);
+		
+		if (hitbox.intersects(attack)){
+			health -= 10;
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void updateBullets(ArrayList<Bullet> enemyBullets) {
+		Rectangle hitbox = new Rectangle(x, y, Character.width, Character.height);
+		
+		for (int i = 0; i < enemyBullets.size(); i++) {
+			Bullet bullet = enemyBullets.get(i);
+			
+			if (bullet.direction == 0) {
+				bullet.x -= bullet.speed;
+			}
+			else {
+				bullet.x += bullet.speed;
+			}
+			
+			if (takeDamage(bullet)) {
+				enemyBullets.remove(i);
+			}
 		}
 	}
 	
