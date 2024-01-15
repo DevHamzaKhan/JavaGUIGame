@@ -43,7 +43,7 @@ public class Character {
             x += speed;
 			horizontalFacing = 1;
         }
-		if ((!isOnPlatform(platforms) || keysPressed[2]) && !isJumping && (y + width) < platforms[0].y) {
+		if ((!isOnPlatform(platforms) || keysPressed[2]) && !isJumping && (y + height) < platforms[0].y) {
 			y += 5;
 		}
 		
@@ -150,8 +150,8 @@ public class Character {
             if (p.active == 1){
                 if (y + height >= p.y &&
                     y + height <= p.y + 5 &&
-                    x + width >= p.x &&
-                    x <= p.x + p.width) {
+                    x >= p.x &&
+                    x + width <= p.x + p.width) {
                         return true;
                 }
             }
