@@ -34,11 +34,13 @@ public class Smash extends JFrame {
     //Character
     Character p1 = new Character(50, 0, 1, 5, 5, 5, 50, 86);
 	Character p2 = new Character(250, 0, 0, 5, 5, 5, 50, 118);
+    Music backgroundMusic = new Music("backgroundmusic.wav", -1);
     GameImage [] backgrounds = {
         new GameImage("FireBackground.png", 0, 0, screen_width, screen_height, false),
         new GameImage("SandBackground.png", 0, 0, screen_width, screen_height, false),
         new GameImage("IceBackground.png", 0, 0, screen_width, screen_height, false),
-        new GameImage("SpaceBackground.png", 0, 0, screen_width, screen_height, false)
+        new GameImage("SpaceBackground.png", 0, 0, screen_width, screen_height, false),
+        new GameImage("DefaultBackground.png", 0, 0, screen_width, screen_height, false)
     };
     SpriteImage [] character_runR = {
         new SpriteImage(p1, "RunAnimation/tile000.png", p1.x, p1.y, 96, 96, false),
@@ -189,7 +191,7 @@ public class Smash extends JFrame {
 
         SmashPanel smashPanel = new SmashPanel();
         add(smashPanel);
-
+        backgroundMusic.start();
 
         Timer timer = new Timer(10, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -331,8 +333,6 @@ public class Smash extends JFrame {
 
     public void GameMode(){
             switch (mode) {
-                case 0:
-                    break;
                 case 1:
                     p1.speed /= 2;
                     p2.speed /= 2;
@@ -358,6 +358,8 @@ public class Smash extends JFrame {
             // Draw platform
             switch (mode) {
                 case 0:
+                    p1.burn();
+                    p2.burn();
                     backgrounds[0].draw(g);;
                     break;
                 case 1:
@@ -368,6 +370,9 @@ public class Smash extends JFrame {
                     break;
                 case 3:
                     backgrounds[3].draw(g);;
+                    break;
+                case 4:
+                    backgrounds[4].draw(g);;
                     break;
             }
 
@@ -400,13 +405,20 @@ public class Smash extends JFrame {
             
             
 			// Draw health bars
-            g.setColor(Color.GREEN);
 			if (p1.health >= 0) {
-				g.fillRect(30, 20, 2 * p1.health, 30);
+				int hpBarWidth = 2 * p2.health;
+                g.setColor(Color.RED);
+				g.fillRect(30, 20, 200, 30);
+                g.setColor(Color.GREEN);
+				g.fillRect(30, 20, hpBarWidth, 30);
 			}
 			if (p2.health >= 0) {
 				int hpBarWidth = 2 * p2.health;
+                g.setColor(Color.RED);
+				g.fillRect(screen_width - 200 - 30, 20, 200, 30);
+                g.setColor(Color.GREEN);
 				g.fillRect(screen_width - hpBarWidth - 30, 20, hpBarWidth, 30);
+                
 			}
 			
 			for (Bullet bullet: p2.bullets) {

@@ -12,8 +12,9 @@ import java.util.ArrayList;
 public class Character {
     public String state = "idleR";
 	public int width, height; 
-    public int jumpHeight = 100, spriteCounter = 0, animationSpeed = 4;
+    public int jumpHeight = 100, spriteCounter = 0, animationSpeed = 4, burnSpeed = 150, frame = 0;
 	public ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+    public Music [] sfx = {new Music("shot.wav", 1), new Music("attack.wav", 1)};
 	
     public int x, y, jumpCounter, health, horizontalFacing, facing, speed, gravity, jump;
 	boolean isJumping; 
@@ -59,7 +60,12 @@ public class Character {
 		
 		updateBullets(enemyBullets);
 	}
-	
+	public void burn(){
+        if ((frame % burnSpeed) == 0){
+            health -= 1;
+        }
+        frame += 1;
+    }
     public void jump() {
         isJumping = true;
         new Thread(new Runnable() {
@@ -82,6 +88,7 @@ public class Character {
     }
 	
 	public Rectangle attack() {
+        sfx[1].start();
 		if (facing == 1) {
 			return new Rectangle(x, y - height, width, height);
 		}
@@ -99,6 +106,7 @@ public class Character {
 	}
 	
 	public void shoot() {
+        sfx[0].start();
 		if (horizontalFacing == 0) {
 			bullets.add(new Bullet(this.x - Bullet.width, this.y + this.height / 2 - Bullet.height / 2, horizontalFacing, 5));
 		}
@@ -111,7 +119,7 @@ public class Character {
 		Rectangle hitbox = new Rectangle(x, y, width, height);
 		
 		if (hitbox.intersects(attack)){
-			health -= 10;
+			health -= 2;
 		}
 	}
 	
@@ -119,7 +127,7 @@ public class Character {
 		Rectangle hitbox = new Rectangle(x, y, width, height);
 		
 		if (hitbox.intersects(attack)){
-			health -= 10;
+			health -= 2;
 			return true;
 		}
 		
