@@ -168,6 +168,71 @@ public class Smash extends JPanel implements KeyListener{
         new SpriteImage(p2, "IdleAnimationG/tile007.png", p2.x, p2.y, 128, 128, true)
     };
 
+    SpriteImage [] Scharacter_runR = {
+        new SpriteImage(p1, "RunAnimationS/tile000.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "RunAnimationS/tile001.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "RunAnimationS/tile003.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "RunAnimationS/tile004.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "RunAnimationS/tile006.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "RunAnimationS/tile007.png", p2.x, p2.y, 96, 96, false)
+    };
+    SpriteImage [] Scharacter_attackR = {
+        new SpriteImage(p1, "AttackAnimationS/tile000.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "AttackAnimationS/tile001.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "AttackAnimationS/tile002.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "AttackAnimationS/tile003.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "AttackAnimationS/tile004.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "AttackAnimationS/tile004.png", p2.x, p2.y, 96, 96, false)
+    };
+    SpriteImage [] Scharacter_shootR = {
+        new SpriteImage(p1, "ShootAnimationS/tile000.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "ShootAnimationS/tile001.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "ShootAnimationS/tile002.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "ShootAnimationS/tile003.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "ShootAnimationS/tile004.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "ShootAnimationS/tile004.png", p2.x, p2.y, 96, 96, false)
+    };
+    SpriteImage [] Scharacter_idleR = {
+        new SpriteImage(p1, "IdleAnimationS/tile000.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "IdleAnimationS/tile001.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "IdleAnimationS/tile002.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "IdleAnimationS/tile003.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "IdleAnimationS/tile004.png", p2.x, p2.y, 96, 96, false),
+        new SpriteImage(p1, "IdleAnimationS/tile005.png", p2.x, p2.y, 96, 96, false)
+    };
+    SpriteImage [] Scharacter_runL = {
+        new SpriteImage(p1, "RunAnimationS/tile000.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "RunAnimationS/tile001.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "RunAnimationS/tile003.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "RunAnimationS/tile004.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "RunAnimationS/tile006.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "RunAnimationS/tile007.png", p2.x, p2.y, 96, 96, true)
+    };
+    SpriteImage [] Scharacter_attackL = {
+        new SpriteImage(p1, "AttackAnimationS/tile000.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "AttackAnimationS/tile001.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "AttackAnimationS/tile002.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "AttackAnimationS/tile003.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "AttackAnimationS/tile004.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "AttackAnimationS/tile004.png", p2.x, p2.y, 96, 96, true)
+    };
+    SpriteImage [] Scharacter_shootL = {
+        new SpriteImage(p1, "ShootAnimationS/tile000.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "ShootAnimationS/tile001.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "ShootAnimationS/tile002.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "ShootAnimationS/tile003.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "ShootAnimationS/tile004.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "ShootAnimationS/tile004.png", p2.x, p2.y, 96, 96, true)
+    };
+    SpriteImage [] Scharacter_idleL = {
+        new SpriteImage(p1, "IdleAnimationS/tile000.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "IdleAnimationS/tile001.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "IdleAnimationS/tile002.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "IdleAnimationS/tile003.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "IdleAnimationS/tile004.png", p2.x, p2.y, 96, 96, true),
+        new SpriteImage(p1, "IdleAnimationS/tile005.png", p2.x, p2.y, 96, 96, true)
+    };
+
     Platform [] platforms = {
         new Platform(0, 400, 960, 20, 1, "newplatform.png"),
         new Platform(90, 300, 200, 10, (int)Math.round(Math.random()), "newplatform.png"),
@@ -415,14 +480,14 @@ public class Smash extends JPanel implements KeyListener{
 
             
             g.setColor(Color.GREEN);
-            for (SpriteImage i : character_runL){i.update();}
-            for (SpriteImage i : character_runR){i.update();}
-            for (SpriteImage i : character_attackL){i.update();}
-            for (SpriteImage i : character_attackR){i.update();}
-            for (SpriteImage i : character_idleL){i.update();}
-            for (SpriteImage i : character_idleR){i.update();}
-            for (SpriteImage i : character_shootL){i.update();}
-            for (SpriteImage i : character_shootR){i.update();}
+            for (SpriteImage i : Scharacter_runL){i.update();}
+            for (SpriteImage i : Scharacter_runR){i.update();}
+            for (SpriteImage i : Scharacter_attackL){i.update();}
+            for (SpriteImage i : Scharacter_attackR){i.update();}
+            for (SpriteImage i : Scharacter_idleL){i.update();}
+            for (SpriteImage i : Scharacter_idleR){i.update();}
+            for (SpriteImage i : Scharacter_shootL){i.update();}
+            for (SpriteImage i : Scharacter_shootR){i.update();}
             for (SpriteImage i : Gcharacter_runL){i.update();}
             for (SpriteImage i : Gcharacter_runR){i.update();}
             for (SpriteImage i : Gcharacter_attackL){i.update();}
@@ -431,7 +496,7 @@ public class Smash extends JPanel implements KeyListener{
             for (SpriteImage i : Gcharacter_idleR){i.update();}
             for (SpriteImage i : Gcharacter_shootL){i.update();}
             for (SpriteImage i : Gcharacter_shootR){i.update();}
-            p1.draw(g, character_runL, character_runR, character_attackL, character_attackR, character_idleL, character_idleR, character_shootL, character_shootR);
+            p1.draw(g, Scharacter_runL, Scharacter_runR, Scharacter_attackL, Scharacter_attackR, Scharacter_idleL, Scharacter_idleR, Scharacter_shootL, Scharacter_shootR);
             p2.draw(g, Gcharacter_runL, Gcharacter_runR, Gcharacter_attackL, Gcharacter_attackR, Gcharacter_idleL, Gcharacter_idleR, Gcharacter_shootL, Gcharacter_shootR);
             
             

@@ -1,0 +1,10 @@
+Hamza:
+Add 3rd Character
+Fix music
+Convert animations into class
+
+Leo:
+Convert Characters to character subclasses
+Add character select
+Add Map select
+Fix jump
