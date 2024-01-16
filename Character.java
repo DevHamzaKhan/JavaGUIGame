@@ -15,7 +15,8 @@ public abstract class Character {
 	boolean isJumping, canAttack, canShoot;
     public int jumpHeight, spriteCounter, animationSpeed, burnSpeed,, frame;
 	public ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-    public Music[] sfx = {new Music("shot.wav", 1), new Music("attack.wav", 1)};
+	public SpriteImage[][] animations;
+	public Music attackSFX, shotSFX;
 	
     public int x, y, jumpCounter, health, horizontalFacing, facing, speed, gravity, jump;
 	public boolean isJumping, canAttack, canShoot; 
@@ -99,6 +100,7 @@ public abstract class Character {
     }
 	
 	public Rectangle attack() {
+		attackSFX = new Music("attack.wav", 1)
         sfx[1].start();
 		canAttack = false;
 
@@ -119,13 +121,14 @@ public abstract class Character {
 	}
 	
 	public void shoot() {
+		shotSFX = new Music("shot.wav", 1),
         sfx[0].start();
 		canShoot = false;
 		if (horizontalFacing == 0) {
-			bullets.add(new Bullet(this.x - Bullet.width, this.y + this.height / 2 - Bullet.height / 2, horizontalFacing, 5));
+			bullets.add(new Bullet(this.x - Bullet.width, this.y + this.height / 2 - Bullet.height / 2, horizontalFacing, damage));
 		}
 		else {
-			bullets.add(new Bullet(this.x + this.width, this.y + this.height / 2 - Bullet.height / 2, horizontalFacing, 5));
+			bullets.add(new Bullet(this.x + this.width, this.y + this.height / 2 - Bullet.height / 2, horizontalFacing, damage));
 		}
 	}
 	
@@ -155,13 +158,13 @@ public abstract class Character {
 			Bullet bullet = enemyBullets.get(i);
 			
 			if (bullet.direction == 0) {
-				bullet.x -= bullet.speed;
+				bullet.x -= 5;
 			}
 			else {
-				bullet.x += bullet.speed;
+				bullet.x += 5;
 			}
 			
-			if (takeDamage(bullet)) {
+			if (takeDamage(bullet, bullet.damage)) {
 				enemyBullets.remove(i);
 			}
 			else if (bullet.x < 0 || bullet.x > Main.WIDTH) {
@@ -183,45 +186,6 @@ public abstract class Character {
         }
         return false;
     }
-    public void draw(Graphics g, GameImage [] walkLeft, GameImage [] walkRight, GameImage [] attackLeft, GameImage [] attackRight, GameImage [] idleLeft, GameImage [] idleRight, GameImage [] shootLeft, GameImage [] shootRight ){
-        switch(state){
-            case "right":
-                walkRight[spriteCounter/animationSpeed].draw(g);
-                break;
-            case "left":
-                walkLeft[spriteCounter/animationSpeed].draw(g);
-                break;
-            case "attackR":
-                attackRight[spriteCounter/animationSpeed].draw(g);
-                break;
-            case "attackL":
-                attackLeft[spriteCounter/animationSpeed].draw(g);
-                break;
-            case "idleR":
-                idleRight[spriteCounter/animationSpeed].draw(g);
-                break;
-            case "idleL":
-                idleLeft[spriteCounter/animationSpeed].draw(g);
-                break;
-            case "shootR":
-                shootRight[spriteCounter/animationSpeed].draw(g);
-                break;
-            case "shootL":
-                shootLeft[spriteCounter/animationSpeed].draw(g);
-                break;
-        }
-        spriteCounter += 1;
-        if (spriteCounter == (5*animationSpeed)){
-            if (state.equals("attackL")){
-                state = "idleL";
-            } else if (state.equals("attackR")){
-                state = "idleR";
-            } else if (state.equals("shootL")){
-                state = "idleL";
-            } else if (state.equals("shootR")){
-                state = "idleR";
-            }
-            spriteCounter = 0;
-        }
-    }
+	
+	public abstract void draw;
 }
