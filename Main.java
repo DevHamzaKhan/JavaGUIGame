@@ -15,9 +15,11 @@ public class Main {
         JFrame f = new JFrame("Smash");
 		
 		Menu mainMenu = new Menu();
+		Tutorial tutorialPage = new Tutorial();
 
         f.add(p, BorderLayout.CENTER);
 		addCard(mainMenu, "Menu");
+		addCard(tutorialPage, "Tutorial");
         
         f.setVisible(true);
         f.setSize(WIDTH, HEIGHT);

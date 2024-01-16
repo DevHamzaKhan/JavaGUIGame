@@ -3,7 +3,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Bullet extends Rectangle{
-	static int width = 6, height = 4;
+	static int width = 10, height = 6;
     int direction, speed;
 
     public Bullet(int x, int y, int direction, int speed) {

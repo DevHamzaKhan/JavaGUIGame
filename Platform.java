@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 public class Platform {
     int x; int y; int width; int height; int type; int active; String imagePath;
+	int realY;
     BufferedImage image;
 
     public Platform(int x, int y, int width, int height, int active, String imagePath) {
@@ -20,6 +21,7 @@ public class Platform {
         this.active = active;
         this.imagePath = imagePath;
         this.LoadImage(imagePath);
+		this.realY = this.y + 20;
     }
 
     public void LoadImage(String imagePath) {

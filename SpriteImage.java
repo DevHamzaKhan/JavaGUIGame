@@ -5,7 +5,7 @@ public class SpriteImage extends GameImage{
         this.owner = owner;
     }
     public void update(){
-        x = owner.x;
-        y = owner.y;
+        x = owner.x - owner.xOffset;
+        y = owner.y - owner.yOffset;
     }
 }

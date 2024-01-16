@@ -10,16 +10,16 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class Character {
-    public String state = "idleR";
-	public int width, height; 
+    public String state;
+	public int width, height, xOffset, yOffset; 
     public int jumpHeight = 100, spriteCounter = 0, animationSpeed = 4, burnSpeed = 150, frame = 0;
 	public ArrayList<Bullet> bullets = new ArrayList<Bullet>();
     public Music [] sfx = {new Music("shot.wav", 1), new Music("attack.wav", 1)};
 	
     public int x, y, jumpCounter, health, horizontalFacing, facing, speed, gravity, jump;
-	boolean isJumping; 
+	public boolean isJumping, canAttack, canShoot; 
 	
-    public Character(int x, int y, int horizontalFacing, int speed, int gravity, int jump, int width, int height) {
+    public Character(int x, int y, int horizontalFacing, int speed, int gravity, int jump, int width, int height, int xOffset, int yOffset) {
         this.x = x;
         this.y = y;
 		this.horizontalFacing = horizontalFacing;
@@ -28,9 +28,20 @@ public class Character {
         this.jump = jump;
         this.width = width;
         this.height = height;
+		this.xOffset = xOffset;
+		this.yOffset = yOffset;
         this.isJumping = false;
+		this.canAttack = true;
+		this.canShoot = true;
         this.jumpCounter = 0;
 		this.health = 100;
+		
+		if (horizontalFacing == 0) {
+			state = "idleL";
+		}
+		else {
+			state = "idleR";
+		}
     }
 	
 	public void updateCharacter(boolean[] keysPressed, Platform[] platforms, ArrayList<Bullet> enemyBullets) {
@@ -44,14 +55,14 @@ public class Character {
             x += speed;
 			horizontalFacing = 1;
         }
-		if ((!isOnPlatform(platforms) || keysPressed[2]) && !isJumping && (y + height) < platforms[0].y) {
+		if ((!isOnPlatform(platforms) || keysPressed[2]) && !isJumping && (y + height) < platforms[0].realY) {
 			y += 5;
 		}
 		
 		if (keysPressed[0]) {
 			facing = 1;
 		}
-		else if (keysPressed[1]) {
+		else if (keysPressed[2]) {
 			facing = 2;
 		}
 		else {
@@ -89,6 +100,8 @@ public class Character {
 	
 	public Rectangle attack() {
         sfx[1].start();
+		canAttack = false;
+
 		if (facing == 1) {
 			return new Rectangle(x, y - height, width, height);
 		}
@@ -107,6 +120,7 @@ public class Character {
 	
 	public void shoot() {
         sfx[0].start();
+		canShoot = false;
 		if (horizontalFacing == 0) {
 			bullets.add(new Bullet(this.x - Bullet.width, this.y + this.height / 2 - Bullet.height / 2, horizontalFacing, 5));
 		}
@@ -150,16 +164,19 @@ public class Character {
 			if (takeDamage(bullet)) {
 				enemyBullets.remove(i);
 			}
+			else if (bullet.x < 0 || bullet.x > Main.WIDTH) {
+				enemyBullets.remove(i);
+			}
 		}
 	}
 	
 	public boolean isOnPlatform(Platform[] platforms){
         for (Platform p : platforms) {
             if (p.active == 1){
-                if (y + height >= p.y &&
-                    y + height <= p.y + 5 &&
-                    x + width >= p.x &&
-                    x + width <= p.x + p.width) {
+                if (y + height >= p.realY &&
+                    y + height <= p.realY + 5 &&
+                    x + width >= p.x + 15 &&
+                    x + width <= p.x + p.width + 30) {
                         return true;
                 }
             }

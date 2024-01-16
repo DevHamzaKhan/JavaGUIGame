@@ -22,14 +22,13 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Smash extends JPanel implements KeyListener{
-    public boolean[] p1KeysPressed = new boolean[4]; // [W, A, S, D, E]
-	public boolean[] p2KeysPressed = new boolean[4]; // [I, J, K, L, O]
+    public boolean[] p1KeysPressed = new boolean[6]; // [W, A, S, D, E, Q]
+	public boolean[] p2KeysPressed = new boolean[6]; // [I, J, K, L, O, U]
     public int mode = (int)(Math.random() * 5);
-    
 
     //Character
-    Character p1 = new Character(50, 0, 1, 5, 5, 5, 50, 86);
-	Character p2 = new Character(250, 0, 0, 5, 5, 5, 50, 118);
+    Character p1 = new Character(50, 0, 1, 5, 5, 5, 50, 80, 20, 20);
+	Character p2 = new Character(800, 0, 0, 5, 5, 5, 50, 75, 40, 60);
     Music backgroundMusic = new Music("backgroundmusic.wav", -1);
     GameImage [] backgrounds = {
         new GameImage("FireBackground.png", 0, 0, Main.WIDTH, Main.HEIGHT, false),
@@ -182,7 +181,7 @@ public class Smash extends JPanel implements KeyListener{
 	};
     //Base Constructor
     public Smash() {
-        backgroundMusic.start();
+        //backgroundMusic.start();
 		setVisible(true);
 
         Timer timer = new Timer(10, new ActionListener() {
@@ -211,89 +210,83 @@ public class Smash extends JPanel implements KeyListener{
     
     public void handleKeyPress(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_A) {
-            p1KeysPressed[1] = true;
-            p1.state = "left";
-        } 
-		else if (key == KeyEvent.VK_D) {
-            p1KeysPressed[3] = true;
-            p1.state = "right";
-        } 
-		else if (key == KeyEvent.VK_W) {
+		if (key == KeyEvent.VK_W) {
             p1KeysPressed[0] = true;
 			if (p1.isOnPlatform(platforms))
 				p1.jump();
         }
+        else if (key == KeyEvent.VK_A) {
+            p1KeysPressed[1] = true;
+            p1.state = "left";
+        } 
 		else if (key == KeyEvent.VK_S) {
 			p1KeysPressed[2] = true;
 		}
+		else if (key == KeyEvent.VK_D) {
+            p1KeysPressed[3] = true;
+            p1.state = "right";
+        }
 		else if (key == KeyEvent.VK_E) {
-            p1.spriteCounter = 0;
-			p2.takeDamage(p1.attack());
+			p1KeysPressed[4] = true;
 		} 
         else if (key == KeyEvent.VK_Q) {
-			p1.shoot(); 
-            p1.spriteCounter = 0;
-            if (p1.horizontalFacing == 0){                 
-                p1.state = "shootL";
-            }
-            if (p1.horizontalFacing == 1){                 
-                p1.state = "shootR";
-            }
-		} 	
-		else if (key == KeyEvent.VK_J) {
-            p2KeysPressed[1] = true;
-            p2.state = "left";
-        } 
-		else if (key == KeyEvent.VK_L) {
-            p2KeysPressed[3] = true;
-            p2.state = "right";
-        } 
+			p1KeysPressed[5] = true;
+		}
 		else if (key == KeyEvent.VK_I) {
 			p2KeysPressed[0] = true;
 			if (p2.isOnPlatform(platforms))
 				p2.jump();
         } 
+		else if (key == KeyEvent.VK_J) {
+            p2KeysPressed[1] = true;
+            p2.state = "left";
+        } 
 		else if (key == KeyEvent.VK_K) {
 			p2KeysPressed[2] = true;
-			System.out.println(p1.x);
-			System.out.println(platforms[1].x);
 		}
+		else if (key == KeyEvent.VK_L) {
+            p2KeysPressed[3] = true;
+            p2.state = "right";
+        }
 		else if (key == KeyEvent.VK_O) {
-            p2.spriteCounter = 0;
-			p1.takeDamage(p2.attack());
+			p2KeysPressed[4] = true;
 		}
 		else if (key == KeyEvent.VK_U) {
-			p2.shoot();
-            p2.spriteCounter = 0;
-            if (p2.horizontalFacing == 0){                 
-                p2.state = "shootL";
-            }
-            if (p2.horizontalFacing == 1){                 
-                p2.state = "shootR";
-            }
-		} 		
+			p2KeysPressed[5] = true;
+		}		
     }
 
     public void handleKeyRelease(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_A) {
+		
+		if (key == KeyEvent.VK_W) {
+			p1KeysPressed[0] = false;
+		} 
+        else if (key == KeyEvent.VK_A) {
             p1KeysPressed[1] = false;
             if (p1.state == "left"){
                 p1.state = "idleL";
             }
         } 
+		else if (key == KeyEvent.VK_S) {
+			p1KeysPressed[2] = false;
+		}
 		else if (key == KeyEvent.VK_D) {
             p1KeysPressed[3] = false;
             if (p1.state == "right"){
                 p1.state = "idleR";
             }
         } 
-		else if (key == KeyEvent.VK_W) {
-			p1KeysPressed[0] = false;
-		} 
-		else if (key == KeyEvent.VK_S) {
-			p1KeysPressed[2] = false;
+		else if (key == KeyEvent.VK_E) {
+			p1KeysPressed[4] = false;
+			p1.canAttack = true;
+		}
+		else if (key == KeyEvent.VK_Q) {
+			p1KeysPressed[5] = false;
+			p1.canShoot = true;
+		}
+		else if (key == KeyEvent.VK_I) {
+			p2KeysPressed[0] = false;
 		}
 		else if (key == KeyEvent.VK_J) {
             p2KeysPressed[1] = false;
@@ -301,17 +294,22 @@ public class Smash extends JPanel implements KeyListener{
                 p2.state = "idleL";
             }
         } 
+		else if (key == KeyEvent.VK_K) {
+			p2KeysPressed[2] = false;
+		}
 		else if (key == KeyEvent.VK_L) {
             p2KeysPressed[3] = false;
             if (p2.state == "right"){
                 p2.state = "idleR";
             }
         }
-		else if (key == KeyEvent.VK_I) {
-			p2KeysPressed[0] = false;
+		else if (key == KeyEvent.VK_O) {
+			p2KeysPressed[4] = false;
+			p2.canAttack = true;
 		}
-		else if (key == KeyEvent.VK_K) {
-			p2KeysPressed[2] = false;
+		else if (key == KeyEvent.VK_U) {
+			p2KeysPressed[5] = false;
+			p2.canShoot = true;
 		}
     }
 
@@ -321,6 +319,48 @@ public class Smash extends JPanel implements KeyListener{
 		// Movement control
         p1.updateCharacter(p1KeysPressed, platforms, p2.bullets);
 		p2.updateCharacter(p2KeysPressed, platforms, p1.bullets);
+		
+		if (p1KeysPressed[4] && p1.canAttack) {
+			p1.spriteCounter = 0;
+			p2.takeDamage(p1.attack());
+		}
+		if (p1KeysPressed[5] && p1.canShoot) {
+			p1.shoot(); 
+			p1.spriteCounter = 0;
+			if (p1.horizontalFacing == 0){                 
+				p1.state = "shootL";
+			}
+			if (p1.horizontalFacing == 1){          
+				p1.state = "shootR";
+			}
+		}
+		if (p2KeysPressed[4] && p2.canAttack) {
+			p2.spriteCounter = 0;
+			p1.takeDamage(p2.attack());
+		}
+		if (p2KeysPressed[5] && p2.canShoot) {
+			p2.shoot(); 
+			p2.spriteCounter = 0;
+			if (p2.horizontalFacing == 0){                 
+				p2.state = "shootL";
+			}
+			if (p2.horizontalFacing == 1){                 
+				p2.state = "shootR";
+			}
+		}
+		
+		if (p1.health <= 0) {
+			GameOver endScreen = new GameOver("Player 2", backgrounds[mode]);
+			Main.addCard(endScreen, "GameOver");
+			Main.showCard("GameOver");
+			Main.removeCard(this);
+		}
+		if (p2.health <= 0) {
+			GameOver endScreen = new GameOver("Player 1", backgrounds[mode]);
+			Main.addCard(endScreen, "GameOver");
+			Main.showCard("GameOver");
+			Main.removeCard(this);
+		}
     }
 
     public void GameMode(){
@@ -412,6 +452,7 @@ public class Smash extends JPanel implements KeyListener{
                 
 			}
 			
+			g.setColor(Color.RED);
 			for (Bullet bullet: p2.bullets) {
 				g.fillRect((int)bullet.getX(), (int)bullet.getY(), (int)bullet.getWidth(), (int)bullet.getHeight());
 			}
