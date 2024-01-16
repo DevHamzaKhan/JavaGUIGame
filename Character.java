@@ -158,7 +158,7 @@ public class Character {
             if (p.active == 1){
                 if (y + height >= p.y &&
                     y + height <= p.y + 5 &&
-                    x >= p.x &&
+                    x + width >= p.x &&
                     x + width <= p.x + p.width) {
                         return true;
                 }
