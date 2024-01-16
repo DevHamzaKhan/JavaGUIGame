@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,12 +21,9 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class Smash extends JFrame {
-    public SmashPanel smashPanel;
+public class Smash extends JPanel implements KeyListener{
     public boolean[] p1KeysPressed = new boolean[4]; // [W, A, S, D, E]
 	public boolean[] p2KeysPressed = new boolean[4]; // [I, J, K, L, O]
-    public int screen_width = 960;
-    public int screen_height = 520;
     public int mode = (int)(Math.random() * 5);
     
 
@@ -36,11 +32,11 @@ public class Smash extends JFrame {
 	Character p2 = new Character(250, 0, 0, 5, 5, 5, 50, 118);
     Music backgroundMusic = new Music("backgroundmusic.wav", -1);
     GameImage [] backgrounds = {
-        new GameImage("FireBackground.png", 0, 0, screen_width, screen_height, false),
-        new GameImage("SandBackground.png", 0, 0, screen_width, screen_height, false),
-        new GameImage("IceBackground.png", 0, 0, screen_width, screen_height, false),
-        new GameImage("SpaceBackground.png", 0, 0, screen_width, screen_height, false),
-        new GameImage("DefaultBackground.png", 0, 0, screen_width, screen_height, false)
+        new GameImage("FireBackground.png", 0, 0, Main.WIDTH, Main.HEIGHT, false),
+        new GameImage("SandBackground.png", 0, 0, Main.WIDTH, Main.HEIGHT, false),
+        new GameImage("IceBackground.png", 0, 0, Main.WIDTH, Main.HEIGHT, false),
+        new GameImage("SpaceBackground.png", 0, 0, Main.WIDTH, Main.HEIGHT, false),
+        new GameImage("DefaultBackground.png", 0, 0, Main.WIDTH, Main.HEIGHT, false)
     };
     SpriteImage [] character_runR = {
         new SpriteImage(p1, "RunAnimation/tile000.png", p1.x, p1.y, 96, 96, false),
@@ -180,23 +176,19 @@ public class Smash extends JFrame {
         new Platform(670, 300, 200, 10, (int)Math.round(Math.random()), "newplatform.png"),
         new Platform(186, 200, 200, 10, (int)Math.round(Math.random()), "newplatform.png"),
         new Platform(572,  200, 200, 10, (int)Math.round(Math.random()), "newplatform.png"),
-        new Platform(380, 100, 200, 10, (int)Math.round(Math.random()), "newplatform.png")
+		new Platform(90, 100, 200, 10, (int)Math.round(Math.random()), "newplatform.png"),
+        new Platform(380, 100, 200, 10, (int)Math.round(Math.random()), "newplatform.png"),
+		new Platform(670, 100, 200, 10, (int)Math.round(Math.random()), "newplatform.png")
 	};
     //Base Constructor
     public Smash() {
-        setTitle("Smash Game");
-        setSize(screen_width, screen_height);
-        setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        SmashPanel smashPanel = new SmashPanel();
-        add(smashPanel);
         backgroundMusic.start();
+		setVisible(true);
 
         Timer timer = new Timer(10, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 update();
-                smashPanel.repaint();
+                repaint();
             }
         });
 
@@ -204,19 +196,17 @@ public class Smash extends JFrame {
         GameMode();
 
         //Key listener and Inputs
-        addKeyListener(new KeyListener() {
-            public void keyTyped(KeyEvent e) {}
+        addKeyListener(this);
+    }
+	
+	public void keyTyped(KeyEvent e) {}
 
-            public void keyPressed(KeyEvent e) {
-                handleKeyPress(e);
-            }
+    public void keyPressed(KeyEvent e) {
+        handleKeyPress(e);
+    }
 			
-            public void keyReleased(KeyEvent e) {
-                handleKeyRelease(e);
-            }
-        });
-
-        setFocusable(true);
+	public void keyReleased(KeyEvent e) {
+        handleKeyRelease(e);
     }
     
     public void handleKeyPress(KeyEvent e) {
@@ -266,6 +256,8 @@ public class Smash extends JFrame {
         } 
 		else if (key == KeyEvent.VK_K) {
 			p2KeysPressed[2] = true;
+			System.out.println(p1.x);
+			System.out.println(platforms[1].x);
 		}
 		else if (key == KeyEvent.VK_O) {
             p2.spriteCounter = 0;
@@ -348,17 +340,16 @@ public class Smash extends JFrame {
             }
     }
     // Gameplay Panel
-    
-    public class SmashPanel extends JPanel {
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
+	
+	protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
-            //backgroundImage.draw(g);
-            Graphics2D graphics2d = (Graphics2D) g;
-            // Draw platform
-            switch (mode) {
-                case 0:
-                    p1.burn();
+        //backgroundImage.draw(g);
+        Graphics2D graphics2d = (Graphics2D) g;
+        // Draw platform
+        switch (mode) {
+            case 0:
+                p1.burn();
                     p2.burn();
                     backgrounds[0].draw(g);;
                     break;
@@ -406,7 +397,7 @@ public class Smash extends JFrame {
             
 			// Draw health bars
 			if (p1.health >= 0) {
-				int hpBarWidth = 2 * p2.health;
+				int hpBarWidth = 2 * p1.health;
                 g.setColor(Color.RED);
 				g.fillRect(30, 20, 200, 30);
                 g.setColor(Color.GREEN);
@@ -415,9 +406,9 @@ public class Smash extends JFrame {
 			if (p2.health >= 0) {
 				int hpBarWidth = 2 * p2.health;
                 g.setColor(Color.RED);
-				g.fillRect(screen_width - 200 - 30, 20, 200, 30);
+				g.fillRect(Main.WIDTH - 200 - 30, 20, 200, 30);
                 g.setColor(Color.GREEN);
-				g.fillRect(screen_width - hpBarWidth - 30, 20, hpBarWidth, 30);
+				g.fillRect(Main.WIDTH - hpBarWidth - 30, 20, hpBarWidth, 30);
                 
 			}
 			
@@ -427,15 +418,5 @@ public class Smash extends JFrame {
             for (Bullet bullet: p1.bullets) {
 				g.fillRect((int)bullet.getX(), (int)bullet.getY(), (int)bullet.getWidth(), (int)bullet.getHeight());
 			}
-        }
-    }
-
-    // Main game loop
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new Smash().setVisible(true);
-            }
-        });
     }
 }

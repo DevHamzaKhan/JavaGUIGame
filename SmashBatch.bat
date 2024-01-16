@@ -1,4 +1,4 @@
-javac Smash.java
+javac Main.java
 pause
-java Smash
+java Main
 pause
