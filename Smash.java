@@ -37,71 +37,7 @@ public class Smash extends JPanel implements KeyListener{
         new GameImage("SpaceBackground.png", 0, 0, Main.WIDTH, Main.HEIGHT, false),
         new GameImage("DefaultBackground.png", 0, 0, Main.WIDTH, Main.HEIGHT, false)
     };
-    SpriteImage [] character_runR = {
-        new SpriteImage(p1, "RunAnimation/tile000.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "RunAnimation/tile001.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "RunAnimation/tile002.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "RunAnimation/tile003.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "RunAnimation/tile004.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "RunAnimation/tile005.png", p1.x, p1.y, 96, 96, false)
-    };
-    SpriteImage [] character_attackR = {
-        new SpriteImage(p1, "AttackAnimation/tile000.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "AttackAnimation/tile001.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "AttackAnimation/tile002.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "AttackAnimation/tile003.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "AttackAnimation/tile004.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "AttackAnimation/tile005.png", p1.x, p1.y, 96, 96, false)
-    };
-    SpriteImage [] character_shootR = {
-        new SpriteImage(p1, "ShootAnimation/tile000.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "ShootAnimation/tile001.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "ShootAnimation/tile002.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "ShootAnimation/tile003.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "ShootAnimation/tile004.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "ShootAnimation/tile005.png", p1.x, p1.y, 96, 96, false)
-    };
-    SpriteImage [] character_idleR = {
-        new SpriteImage(p1, "IdleAnimation/tile000.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "IdleAnimation/tile001.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "IdleAnimation/tile002.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "IdleAnimation/tile003.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "IdleAnimation/tile004.png", p1.x, p1.y, 96, 96, false),
-        new SpriteImage(p1, "IdleAnimation/tile005.png", p1.x, p1.y, 96, 96, false)
-    };
-    SpriteImage [] character_runL = {
-        new SpriteImage(p1, "RunAnimation/tile000.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "RunAnimation/tile001.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "RunAnimation/tile002.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "RunAnimation/tile003.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "RunAnimation/tile004.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "RunAnimation/tile005.png", p1.x, p1.y, 96, 96, true)
-    };
-    SpriteImage [] character_attackL = {
-        new SpriteImage(p1, "AttackAnimation/tile000.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "AttackAnimation/tile001.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "AttackAnimation/tile002.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "AttackAnimation/tile003.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "AttackAnimation/tile004.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "AttackAnimation/tile005.png", p1.x, p1.y, 96, 96, true)
-    };
-    SpriteImage [] character_shootL = {
-        new SpriteImage(p1, "ShootAnimation/tile000.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "ShootAnimation/tile001.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "ShootAnimation/tile002.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "ShootAnimation/tile003.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "ShootAnimation/tile004.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "ShootAnimation/tile005.png", p1.x, p1.y, 96, 96, true)
-    };
-    SpriteImage [] character_idleL = {
-        new SpriteImage(p1, "IdleAnimation/tile000.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "IdleAnimation/tile001.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "IdleAnimation/tile002.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "IdleAnimation/tile003.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "IdleAnimation/tile004.png", p1.x, p1.y, 96, 96, true),
-        new SpriteImage(p1, "IdleAnimation/tile005.png", p1.x, p1.y, 96, 96, true)
-    };
-
+    
 
     SpriteImage [] Gcharacter_runR = {
         new SpriteImage(p2, "RunAnimationG/tile001.png", p2.x, p2.y, 128, 128, false),

@@ -9,32 +9,32 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-public class Character {
+public abstract class Character {
     public String state;
-	public int width, height, xOffset, yOffset; 
-    public int jumpHeight = 100, spriteCounter = 0, animationSpeed = 4, burnSpeed = 150, frame = 0;
+	public int x, y, horizontalFacing, health;
+	boolean isJumping, canAttack, canShoot;
+    public int jumpHeight, spriteCounter, animationSpeed, burnSpeed,, frame;
 	public ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-    public Music [] sfx = {new Music("shot.wav", 1), new Music("attack.wav", 1)};
+    public Music[] sfx = {new Music("shot.wav", 1), new Music("attack.wav", 1)};
 	
     public int x, y, jumpCounter, health, horizontalFacing, facing, speed, gravity, jump;
 	public boolean isJumping, canAttack, canShoot; 
 	
-    public Character(int x, int y, int horizontalFacing, int speed, int gravity, int jump, int width, int height, int xOffset, int yOffset) {
+   public Character(int x, int y, int horizontalFacing) {
         this.x = x;
         this.y = y;
 		this.horizontalFacing = horizontalFacing;
-        this.speed = speed;
-        this.gravity = gravity;
-        this.jump = jump;
-        this.width = width;
-        this.height = height;
-		this.xOffset = xOffset;
-		this.yOffset = yOffset;
         this.isJumping = false;
 		this.canAttack = true;
 		this.canShoot = true;
         this.jumpCounter = 0;
 		this.health = 100;
+		
+		this.jumpHeight = 100;
+		this.spriteCounter = 0;
+		this.animationSpeed = 4;
+		this.burnSpeed = 150;
+		this.frame = 0;
 		
 		if (horizontalFacing == 0) {
 			state = "idleL";
@@ -129,19 +129,19 @@ public class Character {
 		}
 	}
 	
-	public void takeDamage(Rectangle attack) {
+	public void takeDamage(Rectangle attack, int damage) {
 		Rectangle hitbox = new Rectangle(x, y, width, height);
 		
 		if (hitbox.intersects(attack)){
-			health -= 2;
+			health -= damage;
 		}
 	}
 	
-	public boolean takeDamage(Bullet attack) {
+	public boolean takeDamage(Bullet attack, int damage) {
 		Rectangle hitbox = new Rectangle(x, y, width, height);
 		
 		if (hitbox.intersects(attack)){
-			health -= 2;
+			health -= damage;
 			return true;
 		}
 		

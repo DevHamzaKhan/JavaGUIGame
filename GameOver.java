@@ -45,6 +45,7 @@ public class GameOver extends JPanel implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource() == okay) {
+			System.out.println("works");
             Main.showCard("Menu");
 			Main.removeCard(this);
         }
