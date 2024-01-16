@@ -246,7 +246,7 @@ public class Smash extends JPanel implements KeyListener{
 	};
     //Base Constructor
     public Smash() {
-        //backgroundMusic.start();
+        backgroundMusic.start();
 		setVisible(true);
 
         Timer timer = new Timer(10, new ActionListener() {
