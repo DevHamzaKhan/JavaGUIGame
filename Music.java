@@ -9,7 +9,7 @@ public class Music {
     public Music(String filePath, int loopLength) {
         try {
             clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(new File(filePath)));
+            clip.open(AudioSystem.getAudioInputStream(new File("Music&SFX/" + filePath)));
             fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             vol = (float) (Math.log(0.1D) / Math.log(10.0) * 20.0);
             fc.setValue(vol);

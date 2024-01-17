@@ -15,7 +15,7 @@ public class GameImage {
         this.width = width;
         this.height = height;
         this.flip = flip;
-        loadImage(imagePath);
+        loadImage("Images/" + imagePath);
     }
 
     public void loadImage(String imagePath) {
