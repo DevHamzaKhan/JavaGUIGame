@@ -21,7 +21,7 @@ public class Tutorial extends JPanel implements ActionListener{
         this.setFocusable(false);
 		
 		back = new JButton("Back");
-        back.setBounds(Main.WIDTH - 100, Main.HEIGHT - 70, 100, 30);
+        back.setBounds(Main.WIDTH - 150, Main.HEIGHT - 80, 100, 30);
         back.setContentAreaFilled(true);
         back.setForeground(Color.BLACK);
         back.addActionListener(this);

@@ -15,12 +15,11 @@ public class GameOver extends JPanel implements ActionListener{
 	GameImage background;
 	JLabel title, subtitle;
 	
-    public GameOver(String winner, GameImage background) {
+    public GameOver(String winner) {
         this.setBounds(0, 0, Main.WIDTH, Main.HEIGHT);
         this.setLayout(null);
-        this.setFocusable(true);
 		
-		this.background = background;
+		this.background = new GameImage("DefaultBackground.png", 0, 0, Main.WIDTH, Main.HEIGHT, false);
 		
 		title = new JLabel("Game Over", SwingConstants.CENTER);
         title.setBounds(Main.WIDTH / 2 - 300, 60, 600, 100);
@@ -39,15 +38,12 @@ public class GameOver extends JPanel implements ActionListener{
         okay.setContentAreaFilled(true);
         okay.setForeground(Color.BLACK);
         okay.addActionListener(this);
-        okay.setFocusable(true);
         this.add(okay);
     }
 	
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource() == okay) {
-			System.out.println("works");
             Main.showCard("Menu");
-			Main.removeCard(this);
         }
     }
 	

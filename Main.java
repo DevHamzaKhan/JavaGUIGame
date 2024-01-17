@@ -15,11 +15,21 @@ public class Main {
         JFrame f = new JFrame("Smash");
 		
 		Menu mainMenu = new Menu();
+		Smash gameScreen = new Smash();
+		Select selectScreen = new Select();
 		Tutorial tutorialPage = new Tutorial();
+		GameOver p1Win = new GameOver("Player 1");
+		GameOver p2Win = new GameOver("Player 2");
 
         f.add(p, BorderLayout.CENTER);
+		
 		addCard(mainMenu, "Menu");
+		addCard(gameScreen, "Smash");
+		addCard(selectScreen, "Select");
 		addCard(tutorialPage, "Tutorial");
+		addCard(p1Win, "P1Win");
+		addCard(p2Win, "P2Win");
+		
         
         f.setVisible(true);
         f.setSize(WIDTH, HEIGHT);
@@ -44,11 +54,4 @@ public class Main {
     static public void removeCard(JPanel jPanel) {
         p.remove(jPanel);
     }
-	
-	static public void startGame() {
-		Smash gameScreen = new Smash();
-		addCard(gameScreen, "Smash");
-		showCard("Smash");
-		gameScreen.requestFocusInWindow();
-	}
 }

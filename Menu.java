@@ -15,6 +15,7 @@ public class Menu extends JPanel implements ActionListener{
 	JButton start = new JButton("Start");
     JButton tutorial = new JButton("Tutorial");
     JButton exit = new JButton("Exit");
+	JButton select = new JButton("Select");
 	JLabel title;
 	
 	GameImage background = new GameImage("DefaultBackground.png", 0, 0, Main.WIDTH, Main.HEIGHT, false);
@@ -29,12 +30,19 @@ public class Menu extends JPanel implements ActionListener{
 		title.setFont(new Font("SansSerif", Font.BOLD, 48));
         this.add(title);
 
-        start.setBounds(Main.WIDTH / 2 - 100, Main.HEIGHT-300, 200, 40);
+        start.setBounds(Main.WIDTH / 2 - 100, Main.HEIGHT-375, 200, 40);
         start.setContentAreaFilled(true);
         start.setForeground(Color.BLACK);
         start.addActionListener(this);
         start.setFocusable(false);
         this.add(start);
+		
+		select.setBounds(Main.WIDTH / 2 - 100, Main.HEIGHT-300, 200, 40);
+        select.setContentAreaFilled(true);
+        select.setForeground(Color.BLACK);
+        select.addActionListener(this);
+        select.setFocusable(false);
+        this.add(select);
 
         tutorial.setBounds(Main.WIDTH / 2 - 100, Main.HEIGHT-225, 200, 40);
         tutorial.setContentAreaFilled(true);
@@ -53,8 +61,11 @@ public class Menu extends JPanel implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource() == start) {
-            Main.startGame();
+            Main.showCard("Smash");
         }
+		else if (e.getSource() == select) {
+			Main.showCard("Select");
+		}
 		else if (e.getSource() == tutorial) {
 			Main.showCard("Tutorial");
 		}

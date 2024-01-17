@@ -27,7 +27,6 @@ public class Platform {
     public void LoadImage(String imagePath) {
         try {
             image = ImageIO.read(getClass().getResourceAsStream(imagePath));
-            System.out.println("LoadImage");
         } catch (Exception e) {
             System.err.println("Error loading image: " + e.getMessage());
         }

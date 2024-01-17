@@ -11,15 +11,13 @@ import java.util.ArrayList;
 
 public abstract class Character {
     public String state;
-	public int x, y, horizontalFacing, health;
+	public int x, y, horizontalFacing, facing, jumpCounter, health;
 	boolean isJumping, canAttack, canShoot;
-    public int jumpHeight, spriteCounter, animationSpeed, burnSpeed,, frame;
+    public int jumpHeight, spriteCounter, animationSpeed, burnSpeed, frame;
 	public ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	public SpriteImage[][] animations;
 	public Music attackSFX, shotSFX;
-	
-    public int x, y, jumpCounter, health, horizontalFacing, facing, speed, gravity, jump;
-	public boolean isJumping, canAttack, canShoot; 
+	public int speed, width, height, xOffset, yOffset, atkDmg, rgdDmg;
 	
    public Character(int x, int y, int horizontalFacing) {
         this.x = x;
@@ -43,6 +41,34 @@ public abstract class Character {
 		else {
 			state = "idleR";
 		}
+    }
+	
+	
+	public void burn(){
+        if ((frame % burnSpeed) == 0){
+            health -= 1;
+        }
+        frame += 1;
+    }
+    public void jump() {
+        isJumping = true;
+        new Thread(new Runnable() {
+            public void run() {
+                while (jumpCounter <= (jumpHeight)) {
+                    // Adjust the speed of falling
+                    y -= 5;
+                    // Adjust the speed of jumping
+                    jumpCounter += 5;
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                jumpCounter = 0;
+                isJumping = false;
+            }
+        }).start();
     }
 	
 	public void updateCharacter(boolean[] keysPressed, Platform[] platforms, ArrayList<Bullet> enemyBullets) {
@@ -72,36 +98,10 @@ public abstract class Character {
 		
 		updateBullets(enemyBullets);
 	}
-	public void burn(){
-        if ((frame % burnSpeed) == 0){
-            health -= 1;
-        }
-        frame += 1;
-    }
-    public void jump() {
-        isJumping = true;
-        new Thread(new Runnable() {
-            public void run() {
-                while (jumpCounter <= (jumpHeight)) {
-                    // Adjust the speed of falling
-                    y -= gravity;
-                    // Adjust the speed of jumping
-                    jumpCounter += jump;
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                jumpCounter = 0;
-                isJumping = false;
-            }
-        }).start();
-    }
 	
 	public Rectangle attack() {
-		attackSFX = new Music("attack.wav", 1)
-        sfx[1].start();
+		attackSFX = new Music("attack.wav", 1);
+        attackSFX.start();
 		canAttack = false;
 
 		if (facing == 1) {
@@ -121,29 +121,29 @@ public abstract class Character {
 	}
 	
 	public void shoot() {
-		shotSFX = new Music("shot.wav", 1),
-        sfx[0].start();
+		shotSFX = new Music("shot.wav", 1);
+        shotSFX.start();
 		canShoot = false;
 		if (horizontalFacing == 0) {
-			bullets.add(new Bullet(this.x - Bullet.width, this.y + this.height / 2 - Bullet.height / 2, horizontalFacing, damage));
+			bullets.add(new Bullet(this.x - Bullet.width, this.y + height / 2 - Bullet.height / 2, horizontalFacing, rgdDmg));
 		}
 		else {
-			bullets.add(new Bullet(this.x + this.width, this.y + this.height / 2 - Bullet.height / 2, horizontalFacing, damage));
+			bullets.add(new Bullet(this.x + width, this.y + height / 2 - Bullet.height / 2, horizontalFacing, rgdDmg));
 		}
 	}
 	
+	public Rectangle getHitbox() {
+		return new Rectangle(x, y, width, height);
+	}
+	
 	public void takeDamage(Rectangle attack, int damage) {
-		Rectangle hitbox = new Rectangle(x, y, width, height);
-		
-		if (hitbox.intersects(attack)){
+		if (getHitbox().intersects(attack)){
 			health -= damage;
 		}
 	}
 	
 	public boolean takeDamage(Bullet attack, int damage) {
-		Rectangle hitbox = new Rectangle(x, y, width, height);
-		
-		if (hitbox.intersects(attack)){
+		if (getHitbox().intersects(attack)){
 			health -= damage;
 			return true;
 		}
@@ -152,8 +152,6 @@ public abstract class Character {
 	}
 	
 	public void updateBullets(ArrayList<Bullet> enemyBullets) {
-		Rectangle hitbox = new Rectangle(x, y, width, height);
-		
 		for (int i = 0; i < enemyBullets.size(); i++) {
 			Bullet bullet = enemyBullets.get(i);
 			
@@ -187,5 +185,9 @@ public abstract class Character {
         return false;
     }
 	
-	public abstract void draw;
+	public int getHealth() {
+		return health;
+	}
+	
+	public abstract void draw(Graphics g);
 }

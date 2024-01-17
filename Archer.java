@@ -1,10 +1,3 @@
-<<<<<<< Updated upstream
-public class Archer extends Character{
-    Character owner;
-    public Archer(int x, int y, int horizontalFacing, int speed, int gravity, int jump, int width, int height, int xOffset, int yOffset){
-        super(x, y, horizontalFacing, speed, gravity, jump, width, height, xOffset, yOffset);
-        
-=======
 /*
 Programmers: Hamza Khan & Leo Chen
 Program Name: Smash Version 2
@@ -17,53 +10,62 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class Archer extends Character {
-	public static int speed = 7, 
-	public static final int WIDTH = 50, HEIGHT = 75, X_OFFSET = 40, Y_OFFSET = 60, ATK_DMG = 3, RGD_DMG = 5;
-	
-    public Archer(int x, int y, int horizontalFacing) {
-        this.x = x;
-        this.y = y;
-		this.horizontalFacing = horizontalFacing;
-        this.speed = speed;
-        this.isJumping = false;
-		this.canAttack = true;
-		this.canShoot = true;
-        this.jumpCounter = 0;
-		this.health = 100;
+	public Archer(int x, int y, int horizontalFacing) {
+		super(x, y, horizontalFacing);
 		
-		if (horizontalFacing == 0) {
-			state = "idleL";
+		speed = 7;
+		width = 50;
+		height = 75;
+		xOffset = 40;
+		yOffset = 60;
+		atkDmg = 3;
+		rgdDmg = 5;
+		
+		animations = new SpriteImage[8][6];
+		
+		for (int i = 0; i < animations.length; i++) {
+			for (int j = 0; j < animations[0].length; j++) {
+				animations[i][j] = new SpriteImage("ArcherAnimations" + i % 4 + "/tile00" + j + ".png", x, y, 128, 128, i >= animations.length / 2);
+			}
 		}
-		else {
-			state = "idleR";
-		}
-    }
-
+	}
+	
     public void draw(Graphics g){
+		int drawX = this.x - xOffset;
+		int drawY = this.y - yOffset;
+		
         switch(state){
             case "right":
-                walkRight[spriteCounter/animationSpeed].draw(g);
-                break;
-            case "left":
-                walkLeft[spriteCounter/animationSpeed].draw(g);
+				animations[0][spriteCounter/animationSpeed].update(drawX, drawY);
+                animations[0][spriteCounter/animationSpeed].draw(g);
                 break;
             case "attackR":
-                attackRight[spriteCounter/animationSpeed].draw(g);
-                break;
-            case "attackL":
-                attackLeft[spriteCounter/animationSpeed].draw(g);
-                break;
-            case "idleR":
-                idleRight[spriteCounter/animationSpeed].draw(g);
-                break;
-            case "idleL":
-                idleLeft[spriteCounter/animationSpeed].draw(g);
+				animations[1][spriteCounter/animationSpeed].update(drawX, drawY);
+                animations[1][spriteCounter/animationSpeed].draw(g);
                 break;
             case "shootR":
-                shootRight[spriteCounter/animationSpeed].draw(g);
+				animations[2][spriteCounter/animationSpeed].update(drawX, drawY);
+                animations[2][spriteCounter/animationSpeed].draw(g);
+                break;
+            case "idleR":
+				animations[3][spriteCounter/animationSpeed].update(drawX, drawY);
+                animations[3][spriteCounter/animationSpeed].draw(g);
+                break;
+			case "left":
+				animations[4][spriteCounter/animationSpeed].update(drawX, drawY);
+                animations[4][spriteCounter/animationSpeed].draw(g);
+                break;
+			case "attackL":
+				animations[5][spriteCounter/animationSpeed].update(drawX, drawY);
+                animations[5][spriteCounter/animationSpeed].draw(g);
                 break;
             case "shootL":
-                shootLeft[spriteCounter/animationSpeed].draw(g);
+				animations[6][spriteCounter/animationSpeed].update(drawX, drawY);
+                animations[6][spriteCounter/animationSpeed].draw(g);
+                break;
+			case "idleL":
+				animations[7][spriteCounter/animationSpeed].update(drawX, drawY);
+                animations[7][spriteCounter/animationSpeed].draw(g);
                 break;
         }
         spriteCounter += 1;
@@ -79,6 +81,5 @@ public class Archer extends Character {
             }
             spriteCounter = 0;
         }
->>>>>>> Stashed changes
     }
 }
