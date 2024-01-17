@@ -5,10 +5,6 @@ Program Date: 2024-01-16
 Program Description: Character class for Ninja character
 */
 
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.util.ArrayList;
-
 public class Ninja extends Character {
 	// constructor
 	public Ninja(int x, int y, int horizontalFacing) {

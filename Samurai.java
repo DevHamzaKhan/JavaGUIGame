@@ -5,10 +5,6 @@ Program Date: 2024-01-16
 Program Description: Character class for Samurai character
 */
 
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.util.ArrayList;
-
 public class Samurai extends Character {
 	// constructor
 	public Samurai(int x, int y, int horizontalFacing) {

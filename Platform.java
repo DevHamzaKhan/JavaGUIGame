@@ -11,8 +11,7 @@ import javax.imageio.ImageIO;
 
 public class Platform {
 	// declare variables
-    private int x, y, width, height, type, active, realY; 
-	private String imagePath;
+    private int x, y, width, height, active, realY;
     private BufferedImage image;
 	
 	// constructor
@@ -22,7 +21,6 @@ public class Platform {
         this.width = width;
         this.height = height;
         this.active = active;
-        this.imagePath = imagePath;
         this.LoadImage(imagePath);
 		this.realY = this.y + 20; // adjust hitbox of platform to better align with image
     }

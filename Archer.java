@@ -5,10 +5,6 @@ Program Date: 2024-01-16
 Program Description: Character class for Archer character
 */
 
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.util.ArrayList;
-
 public class Archer extends Character {
 	// constructor
 	public Archer(int x, int y, int horizontalFacing) {

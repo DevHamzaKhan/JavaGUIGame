@@ -281,9 +281,10 @@ public class Game extends JPanel implements KeyListener, ComponentListener {
 		randomizer = mode == 0;
 		
 		// load corresponding backgrounds and apply effects
+		if (mode == 0){
+			mode = (int)(Math.random() * 5) + 1;
+		}
 		switch (mode) {
-			case 0:
-				mode = (int)(Math.random() * 5);
 			case 1: 
 				background = new GameImage("DefaultBackground.png", 0, 0, Main.WIDTH, Main.HEIGHT, false);
 				break;
@@ -351,10 +352,11 @@ public class Game extends JPanel implements KeyListener, ComponentListener {
 		}
 		
 		// draw bullets
-		g.setColor(Color.RED);
+		g.setColor(Color.BLUE);
 		for (Bullet bullet: p2.getBullets()) {
 			g.fillRect((int)bullet.getX(), (int)bullet.getY(), (int)bullet.getWidth(), (int)bullet.getHeight());
 		}
+		g.setColor(Color.GREEN);
 		for (Bullet bullet: p1.getBullets()) {
 			g.fillRect((int)bullet.getX(), (int)bullet.getY(), (int)bullet.getWidth(), (int)bullet.getHeight());
 		}
