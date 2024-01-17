@@ -1,11 +1,10 @@
 /*
 Programmers: Hamza Khan & Leo Chen
-Program Name: Smash Version 2
-Program Date: 1/10/2023
-Program Description: Platformer game where 2 characters can move around and jump onto platforms. There are multiple different maps with effects.
+Program Name: Select
+Program Date: 2024-01-16
+Program Description: character and map select screen
 */
 
-//Imports
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,140 +13,105 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Iterator;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-public class Select extends JPanel implements ActionListener, KeyListener, ComponentListener{
+public class Select extends JPanel implements ActionListener, KeyListener, ComponentListener {
+	// declare variables
 	int mode, p1Type, p2Type;
 	GameImage background;
 	
-	JLabel characterTitle, mapTitle;
-	JLabel p1Head, p1_0, p1_1, p1_2;
-	JLabel p2Head, p2_0, p2_1, p2_2;
-	JButton map0, map1, map2, map3, map4, map5;
+	JLabel[] titles = new JLabel[2];
+	JLabel[] headers = new JLabel[2];
+	JLabel[] characters = new JLabel[6];
+	JButton[] maps = new JButton[6];
 	JButton confirm;
     
-    //Base Constructor
+    // constructor
     public Select() {
+		// initialize screen
 		this.setLayout(null);
 		this.setFocusable(true);
 		
+		// initialize variables
 		mode = -1;
 		p1Type = -1;
 		p2Type = -1;
 		
 		this.background = new GameImage("DefaultBackground.png", 0, 0, Main.WIDTH, Main.HEIGHT, false);
 		
-		characterTitle = new JLabel("Character Select", SwingConstants.CENTER);
-        characterTitle.setBounds(Main.WIDTH / 2 - 200, 30, 400, 50);
-		characterTitle.setFont(new Font("SansSerif", Font.BOLD, 48));
-        this.add(characterTitle);
+		// add titles
+		titles[0] = new JLabel("Character Select", SwingConstants.CENTER);
+        titles[0].setBounds(Main.WIDTH / 2 - 200, 30, 400, 50);
+		titles[1] = new JLabel("Map Select", SwingConstants.CENTER);
+        titles[1].setBounds(Main.WIDTH / 2 - 200, 260, 400, 50);
+		for (int i = 0; i < titles.length; i++) {
+			titles[i].setFont(Main.BOLD48);
+			titles[i].setForeground(Color.BLACK);
+			this.add(titles[i]);
+		}
 		
-		p1Head = new JLabel("Player 1 Select", SwingConstants.CENTER);
-        p1Head.setBounds(150, 100, 200, 30);
-		p1Head.setFont(new Font("SansSerif", Font.BOLD, 24));
-        this.add(p1Head);
-		p1_0 = new JLabel("E - Samurai", SwingConstants.CENTER);
-        p1_0.setBounds(150, 140, 200, 30);
-		p1_0.setBackground(Color.WHITE);
-		p1_0.setOpaque(true);
-		p1_0.setFont(new Font("SansSerif", Font.PLAIN, 24));
-        this.add(p1_0);
-		p1_1 = new JLabel("W - Ninja", SwingConstants.CENTER);
-        p1_1.setBounds(150, 180, 200, 30);
-		p1_1.setBackground(Color.WHITE);
-		p1_1.setOpaque(true);
-		p1_1.setFont(new Font("SansSerif", Font.PLAIN, 24));
-        this.add(p1_1);
-		p1_2 = new JLabel("Q - Archer", SwingConstants.CENTER);
-        p1_2.setBounds(150, 220, 200, 30);
-		p1_2.setBackground(Color.WHITE);
-		p1_2.setOpaque(true);
-		p1_2.setFont(new Font("SansSerif", Font.PLAIN, 24));
-        this.add(p1_2);
+		// add headers
+		headers[0] = new JLabel("Player 1 Select", SwingConstants.CENTER);
+        headers[0].setBounds(150, 100, 200, 30);
+		headers[1] = new JLabel("Player 2 Select", SwingConstants.CENTER);
+        headers[1].setBounds(600, 100, 200, 30);
+		for (int i = 0; i < headers.length; i++) {
+			headers[i].setFont(Main.BOLD24);
+			headers[i].setForeground(Color.BLACK);
+			this.add(headers[i]);
+		}
 		
-		p2Head = new JLabel("Player 2 Select", SwingConstants.CENTER);
-        p2Head.setBounds(600, 100, 200, 30);
-		p2Head.setFont(new Font("SansSerif", Font.BOLD, 24));
-        this.add(p2Head);
-		p2_0 = new JLabel("O - Samurai", SwingConstants.CENTER);
-        p2_0.setBounds(600, 140, 200, 30);
-		p2_0.setBackground(Color.WHITE);
-		p2_0.setOpaque(true);
-		p2_0.setFont(new Font("SansSerif", Font.PLAIN, 24));
-        this.add(p2_0);
-		p2_1 = new JLabel("I - Ninja", SwingConstants.CENTER);
-        p2_1.setBounds(600, 180, 200, 30);
-		p2_1.setBackground(Color.WHITE);
-		p2_1.setOpaque(true);
-		p2_1.setFont(new Font("SansSerif", Font.PLAIN, 24));
-        this.add(p2_1);
-		p2_2 = new JLabel("U - Archer", SwingConstants.CENTER);
-        p2_2.setBounds(600, 220, 200, 30);
-		p2_2.setBackground(Color.WHITE);
-		p2_2.setOpaque(true);
-		p2_2.setFont(new Font("SansSerif", Font.PLAIN, 24));
-        this.add(p2_2);
+		// add character select display
+		characters[0] = new JLabel("E - Samurai", SwingConstants.CENTER);
+        characters[0].setBounds(150, 140, 200, 30);
+		characters[1] = new JLabel("W - Ninja", SwingConstants.CENTER);
+        characters[1].setBounds(150, 180, 200, 30);
+		characters[2] = new JLabel("Q - Archer", SwingConstants.CENTER);
+        characters[2].setBounds(150, 220, 200, 30);
+		characters[3] = new JLabel("O - Samurai", SwingConstants.CENTER);
+        characters[3].setBounds(600, 140, 200, 30);
+		characters[4] = new JLabel("I - Ninja", SwingConstants.CENTER);
+        characters[4].setBounds(600, 180, 200, 30);
+		characters[5] = new JLabel("U - Archer", SwingConstants.CENTER);
+        characters[5].setBounds(600, 220, 200, 30);
+		for (int i = 0; i < characters.length; i++) {
+			characters[i].setBackground(Color.ORANGE);
+			characters[i].setOpaque(true);
+			characters[i].setFont(Main.PLAIN24);
+			characters[i].setForeground(Color.BLACK);
+			this.add(characters[i]);
+		}
 		
-		mapTitle = new JLabel("Map Select", SwingConstants.CENTER);
-        mapTitle.setBounds(Main.WIDTH / 2 - 200, 260, 400, 50);
-		mapTitle.setFont(new Font("SansSerif", Font.BOLD, 48));
-        this.add(mapTitle);
+		// add map buttons
+		maps[0] = new JButton("Random");
+        maps[0].setBounds(120, 350, 200, 40);
+		maps[1] = new JButton("Default");
+        maps[1].setBounds(Main.WIDTH / 2 - 100, 350, 200, 40);
+		maps[2] = new JButton("Sand");
+        maps[2].setBounds(Main.WIDTH - 320, 350, 200, 40);
+		maps[3] = new JButton("Ice");
+        maps[3].setBounds(120, 410, 200, 40);
+		maps[4] = new JButton("Space");
+        maps[4].setBounds(Main.WIDTH / 2 - 100, 410, 200, 40);
+		maps[5] = new JButton("Fire");
+        maps[5].setBounds(Main.WIDTH - 320, 410, 200, 40);
+		for (int i = 0; i < maps.length; i++) {
+			maps[i].setFont(Main.PLAIN18);
+			maps[i].setForeground(Color.BLACK);
+			maps[i].setBackground(Color.ORANGE);
+			maps[i].setOpaque(true);
+			maps[i].addActionListener(this);
+			maps[i].setFocusable(false);
+			this.add(maps[i]);
+		}
 		
-		map0 = new JButton("Random");
-        map0.setBounds(120, 350, 200, 40);
-        map0.setForeground(Color.BLACK);
-		map0.setBackground(Color.WHITE);
-		map0.setOpaque(true);
-        map0.addActionListener(this);
-        this.add(map0);
-		map1 = new JButton("Default");
-        map1.setBounds(Main.WIDTH / 2 - 100, 350, 200, 40);
-        map1.setForeground(Color.BLACK);
-		map1.setBackground(Color.WHITE);
-		map1.setOpaque(true);
-        map1.addActionListener(this);
-        this.add(map1);
-		map2 = new JButton("Sand");
-        map2.setBounds(Main.WIDTH - 320, 350, 200, 40);
-        map2.setForeground(Color.BLACK);
-		map2.setBackground(Color.WHITE);
-		map2.setOpaque(true);
-        map2.addActionListener(this);
-        this.add(map2);
-		map3 = new JButton("Ice");
-        map3.setBounds(120, 410, 200, 40);
-        map3.setForeground(Color.BLACK);
-		map3.setBackground(Color.WHITE);
-		map3.setOpaque(true);
-        map3.addActionListener(this);
-        this.add(map3);
-		map4 = new JButton("Space");
-        map4.setBounds(Main.WIDTH / 2 - 100, 410, 200, 40);
-        map4.setForeground(Color.BLACK);
-		map4.setBackground(Color.WHITE);
-		map4.setOpaque(true);
-        map4.addActionListener(this);
-        this.add(map4);
-		map5 = new JButton("Fire");
-        map5.setBounds(Main.WIDTH - 320, 410, 200, 40);
-        map5.setForeground(Color.BLACK);
-		map5.setBackground(Color.WHITE);
-		map5.setOpaque(true);
-        map5.addActionListener(this);
-        this.add(map5);
-
+		// add confirm button
 		confirm = new JButton("Confirm");
         confirm.setBounds(Main.WIDTH / 2 - 50, 180, 100, 40);
         confirm.setContentAreaFilled(true);
         confirm.setForeground(Color.BLACK);
+		confirm.setBackground(Color.ORANGE);
         confirm.addActionListener(this);
+		confirm.setFocusable(false);
         this.add(confirm);
 		confirm.setVisible(false);
 
@@ -155,68 +119,25 @@ public class Select extends JPanel implements ActionListener, KeyListener, Compo
 		addComponentListener(this);
     }
 	
+	// check for buttons clicked
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == map0) {
-			mode = 0;
-
-			map0.setBackground(Color.BLUE);
-			map1.setBackground(Color.WHITE);
-			map2.setBackground(Color.WHITE);
-			map3.setBackground(Color.WHITE);
-			map4.setBackground(Color.WHITE);
-			map5.setBackground(Color.WHITE);
-		} 
-        else if (e.getSource() == map1) {
-			mode = 1;
-			
-			map0.setBackground(Color.WHITE);
-			map1.setBackground(Color.BLUE);
-			map2.setBackground(Color.WHITE);
-			map3.setBackground(Color.WHITE);
-			map4.setBackground(Color.WHITE);
-			map5.setBackground(Color.WHITE);
-        } 
-		else if (e.getSource() == map2) {
-			mode = 2;
-			
-			map0.setBackground(Color.WHITE);
-			map1.setBackground(Color.WHITE);
-			map2.setBackground(Color.BLUE);
-			map3.setBackground(Color.WHITE);
-			map4.setBackground(Color.WHITE);
-			map5.setBackground(Color.WHITE);
-        } 
-		else if (e.getSource() == map3) {
-			mode = 3;
-			
-			map0.setBackground(Color.WHITE);
-			map1.setBackground(Color.WHITE);
-			map2.setBackground(Color.WHITE);
-			map3.setBackground(Color.BLUE);
-			map4.setBackground(Color.WHITE);
-			map5.setBackground(Color.WHITE);
-		} 
-        else if (e.getSource() == map4) {
-			mode = 4;
-			
-			map0.setBackground(Color.WHITE);
-			map1.setBackground(Color.WHITE);
-			map2.setBackground(Color.WHITE);
-			map3.setBackground(Color.WHITE);
-			map4.setBackground(Color.BLUE);
-			map5.setBackground(Color.WHITE);
-        } 
-		else if (e.getSource() == map5) {
-			mode = 5;
-			
-			map0.setBackground(Color.WHITE);
-			map1.setBackground(Color.WHITE);
-			map2.setBackground(Color.WHITE);
-			map3.setBackground(Color.WHITE);
-			map4.setBackground(Color.WHITE);
-			map5.setBackground(Color.BLUE);
-        }
-		else if (e.getSource() == confirm) {
+		// check buttons and change mode
+		for (int i = 0; i < maps.length; i++) {
+			if (e.getSource() == maps[i]) {
+				mode = i;
+				
+				// display which map is selected
+				resetMapStates();
+				maps[i].setBackground(Color.MAGENTA);
+				
+				this.requestFocusInWindow();
+				checkIsSelected();
+				return;
+			} 
+		}
+		
+		// return to main menu when confirmed
+		if (e.getSource() == confirm) {
 			Main.showCard("Menu");
 			return;
 		}
@@ -227,50 +148,46 @@ public class Select extends JPanel implements ActionListener, KeyListener, Compo
 	
 	public void keyTyped(KeyEvent e) {}
 
+	// check for key inputs
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 		
+		// update type and display 
 		if (key == KeyEvent.VK_E) {
 			p1Type = 2;
 			
-			p1_0.setBackground(Color.BLUE);
-			p1_1.setBackground(Color.WHITE);
-			p1_2.setBackground(Color.WHITE);
+			resetCharacter1States();
+			characters[0].setBackground(Color.MAGENTA);
 		} 
         else if (key == KeyEvent.VK_W) {
 			p1Type = 0;
 			
-			p1_0.setBackground(Color.WHITE);
-			p1_1.setBackground(Color.BLUE);
-			p1_2.setBackground(Color.WHITE);
+			resetCharacter1States();
+			characters[1].setBackground(Color.MAGENTA);
         } 
 		else if (key == KeyEvent.VK_Q) {
 			p1Type = 1;
 			
-			p1_0.setBackground(Color.WHITE);
-			p1_1.setBackground(Color.WHITE);
-			p1_2.setBackground(Color.BLUE);
+			resetCharacter1States();
+			characters[2].setBackground(Color.MAGENTA);
         } 
 		else if (key == KeyEvent.VK_O) {
 			p2Type = 2;
 			
-			p2_0.setBackground(Color.BLUE);
-			p2_1.setBackground(Color.WHITE);
-			p2_2.setBackground(Color.WHITE);
+			resetCharacter2States();
+			characters[3].setBackground(Color.MAGENTA);
 		} 
         else if (key == KeyEvent.VK_I) {
 			p2Type = 0;
 			
-			p2_0.setBackground(Color.WHITE);
-			p2_1.setBackground(Color.BLUE);
-			p2_2.setBackground(Color.WHITE);
+			resetCharacter2States();
+			characters[4].setBackground(Color.MAGENTA);;
         } 
 		else if (key == KeyEvent.VK_U) {
 			p2Type = 1;
 			
-			p2_0.setBackground(Color.WHITE);
-			p2_1.setBackground(Color.WHITE);
-			p2_2.setBackground(Color.BLUE);
+			resetCharacter2States();
+			characters[5].setBackground(Color.MAGENTA);
         }
 		
 		checkIsSelected();
@@ -278,26 +195,46 @@ public class Select extends JPanel implements ActionListener, KeyListener, Compo
 			
 	public void keyReleased(KeyEvent e) {}
 	
+	// update Game variables when confirmed
 	public void componentHidden(ComponentEvent e) {
-		Smash.mode = this.mode;
-		Smash.p1Type = this.p1Type;
-		Smash.p2Type = this.p2Type;
+		Game.mode = this.mode;
+		Game.p1Type = this.p1Type;
+		Game.p2Type = this.p2Type;
 	}
 
     public void componentMoved(ComponentEvent e) {}
 
     public void componentResized(ComponentEvent e) {}
-
+	
     public void componentShown(ComponentEvent e) {
         this.requestFocusInWindow();
     }
 	
-	public void checkIsSelected() {
-		if (mode != -1 && p1Type != -1 && p2Type != -1) {
-			confirm.setVisible(true);
-		}
+	// method for reseting background of map buttons
+	private void resetMapStates() {
+		for (int i = 0; i < maps.length; i++)
+			maps[i].setBackground(Color.ORANGE);
 	}
 	
+	// method for reseting background of p1 displays
+	private void resetCharacter1States() {
+		for (int i = 0; i < characters.length / 2; i++)
+			characters[i].setBackground(Color.ORANGE);
+	}
+	
+	// method for reseting background of p2 displays
+	private void resetCharacter2States() {
+		for (int i = characters.length / 2; i < characters.length; i++)
+			characters[i].setBackground(Color.ORANGE);
+	}
+	
+	// display confirm button only when map and characters are selected
+	private void checkIsSelected() {
+		if (mode != -1 && p1Type != -1 && p2Type != -1)
+			confirm.setVisible(true);
+	}
+	
+	// paint component
 	protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 		

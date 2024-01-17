@@ -1,13 +1,23 @@
+/*
+Programmers: Hamza Khan & Leo Chen
+Program Name: SpriteImage
+Program Date: 2024-01-16
+Program Description: class for playing audio
+*/
 
 import java.io.File;
 import javax.sound.sampled.*;
 
 public class Music {
+	// declare variables
     private Clip clip;
     float vol;
     FloatControl fc;
+	
+	// constructor
     public Music(String filePath, int loopLength) {
         try {
+			// initialize audio
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File("Music&SFX/" + filePath)));
             fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -23,9 +33,13 @@ public class Music {
             System.out.println("Something went wrong with the music" + e);
         }
     }
+	
+	// method for stopping audio
     public void stop() {
         clip.stop();
     }
+	
+	// method for starting audio
     public void start() {
         clip.start();
     }
