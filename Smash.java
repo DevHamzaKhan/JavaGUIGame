@@ -5,6 +5,8 @@ Program Date: 1/10/2023
 Program Description: Platformer game where 2 characters can move around and jump onto platforms. There are multiple different maps with effects.
 */
 
+// "write one comment"
+
 //Imports
 import javax.swing.*;
 import java.awt.*;
